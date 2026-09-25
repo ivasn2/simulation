@@ -1,4 +1,8 @@
 package entity;
 
-public class Tree {
+public class Tree extends Entity {
+
+    public Tree() {
+        super("\uD83C\uDF33");
+    }
 }
