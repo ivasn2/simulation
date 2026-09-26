@@ -3,6 +3,7 @@ package map;
 import entity.Coordinates;
 import entity.Entity;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class WorldMap {
@@ -42,7 +43,7 @@ public class WorldMap {
         return !entityPositions.containsKey(coordinates);
     }
 
-    public Entity getAllEntity() {
-        return entityPositions.size();
+    public Collection<Entity> getAllEntities() {
+        return entityPositions.values();
     }
 }
