@@ -13,6 +13,7 @@ public class Simulation {
     private WorldMap worldMap;
     private List<Action> initActions = new ArrayList<>();
     private List<Action> turnActions = new ArrayList<>();
+    private ConsoleRenderer consoleRenderer = new ConsoleRenderer();
 
     public Simulation(int length, int width) {
         this.worldMap = new WorldMap(length, width);
@@ -23,5 +24,7 @@ public class Simulation {
             action.perform(worldMap);
         }
         turnCount++;
+        consoleRenderer.render(worldMap);
     }
+
 }
