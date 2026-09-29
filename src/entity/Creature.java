@@ -5,7 +5,7 @@ public abstract class Creature extends Entity {
     private int health;
     private int speed;
 
-    abstract void makeMove();
+    public abstract void makeMove();
 
     public Creature(String symbol, int hp, int speed) {
         super(symbol);

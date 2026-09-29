@@ -18,7 +18,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    void makeMove() {
+    public void makeMove() {
         //Здесь будет алгоритм поиска пути
     }
 }
