@@ -19,6 +19,12 @@ public class Simulation {
         this.worldMap = new WorldMap(length, width);
     }
 
+    public void startSimulation() {
+        for (Action action : initActions) {
+            action.perform(worldMap);
+        }
+    }
+
     public void nextTurn() {
         for (Action action : turnActions) {
             action.perform(worldMap);
