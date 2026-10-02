@@ -31,7 +31,6 @@ public class Simulation {
         isRunning = true;
         while (isRunning) {
             nextTurn();
-
         }
     }
 
@@ -45,4 +44,11 @@ public class Simulation {
         consoleRenderer.render(worldMap);
     }
 
+    public void addActionToInitActions(Action action) {
+        initActions.add(action);
+    }
+
+    public void addActionToTurnActions(Action action) {
+        turnActions.add(action);
+    }
 }
