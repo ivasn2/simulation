@@ -10,6 +10,7 @@ import java.util.List;
 public class Simulation {
 
     private int turnCount = 0;
+    private boolean isRunning;
     private WorldMap worldMap;
     private List<Action> initActions = new ArrayList<>();
     private List<Action> turnActions = new ArrayList<>();
@@ -19,11 +20,22 @@ public class Simulation {
         this.worldMap = new WorldMap(length, width);
     }
 
+    public void pauseSimulation() {
+        isRunning = false;
+    }
+
     public void startSimulation() {
         for (Action action : initActions) {
             action.perform(worldMap);
         }
+        isRunning = true;
+        while (isRunning) {
+            nextTurn();
+
+        }
     }
+
+
 
     public void nextTurn() {
         for (Action action : turnActions) {
