@@ -1,4 +1,4 @@
-package entity;
+package map;
 
 import java.util.Objects;
 
