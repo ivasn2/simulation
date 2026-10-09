@@ -1,6 +1,5 @@
 package map;
 
-import entity.Coordinates;
 import entity.Entity;
 
 import java.util.Collection;
@@ -27,12 +26,13 @@ public class WorldMap {
     }
 
     public void addEntity(Coordinates coordinates, Entity entity) {
-        entityPositions.put(coordinates, entity);
+        if (isCellEmpty(coordinates)) {
+            entityPositions.put(coordinates, entity);
+        }
     }
 
     public void removeEntity(Coordinates coordinates) {
         entityPositions.remove(coordinates);
-
     }
 
     public Entity getEntity(Coordinates coordinates) {
