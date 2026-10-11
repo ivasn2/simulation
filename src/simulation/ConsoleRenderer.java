@@ -1,6 +1,6 @@
     package simulation;
 
-    import entity.Coordinates;
+    import map.Coordinates;
     import map.WorldMap;
 
     public class ConsoleRenderer {
@@ -14,10 +14,11 @@
                     } else {
                         System.out.print(worldMap.getEntity(coordinates).getSymbol());
                     }
+
                 }
                 System.out.println();
             }
-
+            System.out.println();
         }
 
     }
