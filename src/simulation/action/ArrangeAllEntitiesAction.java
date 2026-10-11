@@ -16,33 +16,39 @@ public class ArrangeAllEntitiesAction implements Action {
     @Override
     public void perform(WorldMap worldMap) {
 
-        Coordinates coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
-        List<Entity> entitiesOnMap = new ArrayList<>();
+        Coordinates coordinates;
 
-        Entity grass = new Grass();
-        Entity rock = new Rock();
-        Entity tree = new Tree();
-        Entity herbivore = new Herbivore("\uD83E\uDECE", 100, 25);
-        Predator predator = new Predator("\uD83D\uDC3B", 150, 15, 25);
+        for (int n = 0; n < 3; n++) {
 
-        entitiesOnMap.add(grass);
-        entitiesOnMap.add(rock);
-        entitiesOnMap.add(tree);
-        entitiesOnMap.add(herbivore);
-        entitiesOnMap.add(predator);
+            Entity grass = new Grass();
+            coordinates = findEmptyCell(worldMap);
+            worldMap.addEntity(coordinates, grass);
 
-        for (Entity entity : entitiesOnMap) {
-            // Цикл для того, если у нас клетка которую задали уже занята - то ищется новая рандомная
-            while (!worldMap.isCellEmpty(coordinates)) {
-                coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
-            }
-            worldMap.addEntity(coordinates, entity);
+            Entity rock = new Rock();
+            coordinates = findEmptyCell(worldMap);
+            worldMap.addEntity(coordinates, rock);
+
+            Entity tree = new Tree();
+            coordinates = findEmptyCell(worldMap);
+            worldMap.addEntity(coordinates, tree);
+
+            Entity herbivore = new Herbivore("\uD83E\uDECE", 100, 25);
+            coordinates = findEmptyCell(worldMap);
+            worldMap.addEntity(coordinates, herbivore);
+
+            Predator predator = new Predator("\uD83D\uDC3B", 150, 15, 25);
+            coordinates = findEmptyCell(worldMap);
+            worldMap.addEntity(coordinates, predator);
         }
-
     }
 
+    public ArrangeAllEntitiesAction() {}
 
-
-    public ArrangeAllEntitiesAction() {
+    public Coordinates findEmptyCell(WorldMap worldMap) {
+        Coordinates coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
+        while (!worldMap.isCellEmpty(coordinates)) {
+            coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
+        }
+        return coordinates;
     }
 }
