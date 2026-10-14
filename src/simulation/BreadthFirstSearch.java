@@ -8,7 +8,7 @@ import java.util.*;
 
 public class BreadthFirstSearch {
 
-    public void breadthFirstSearch(Coordinates coordinates, WorldMap worldMap, Entity entity) {
+    public Coordinates breadthFirstSearch(Coordinates coordinates, WorldMap worldMap, Entity entity) {
         Set<Coordinates> visitedCoordinates = new HashSet<>();
         Queue<Coordinates> cellsToExplore = new LinkedList<>();
 
@@ -36,8 +36,14 @@ public class BreadthFirstSearch {
                             || (worldMap.getEntity(celka).getClass() == entity.getClass())))) {
                                 cellsToExplore.add(celka);
                                 visitedCoordinates.add(celka);
+
+                                if ((!worldMap.isCellEmpty(celka)) &&  (worldMap.getEntity(celka).getClass() == entity.getClass())) {
+                                    // TODO: вынести проверку цели в метод
+                                    return celka;
+                                }
                     }
             }
         }
+        return null;
     }
 }
