@@ -2,6 +2,7 @@ package map;
 
 import entity.Entity;
 
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -27,6 +28,7 @@ public class WorldMap {
 
     public void addEntity(Coordinates coordinates, Entity entity) {
         if (isCellEmpty(coordinates)) {
+            entity.setCoordinates(coordinates);
             entityPositions.put(coordinates, entity);
         }
     }
@@ -40,7 +42,7 @@ public class WorldMap {
     }
 
     public boolean isCellEmpty(Coordinates coordinates) {
-        return !entityPositions.containsKey(coordinates);
+            return !entityPositions.containsKey(coordinates);
     }
 
     public Collection<Entity> getAllEntities() {
