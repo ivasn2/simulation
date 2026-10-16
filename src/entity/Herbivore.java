@@ -12,10 +12,12 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap) {
+
         BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
-        Grass grass = new Grass();
+
         Coordinates oldCoordinates = getCoordinates();
-        Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, grass);
+        Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, Grass.class);
+
         if (newCoordinates != null) {
             if (worldMap.getEntity(newCoordinates) instanceof Grass) {
                 worldMap.removeEntity(newCoordinates);

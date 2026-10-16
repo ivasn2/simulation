@@ -1,5 +1,7 @@
 package entity;
 
+import map.Coordinates;
+
 public abstract class Entity {
 
     private Coordinates coordinates;

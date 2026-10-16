@@ -1,5 +1,8 @@
 package entity;
 
+import map.WorldMap;
+import simulation.BreadthFirstSearch;
+
 public class Predator extends Creature {
 
     private int attackPower;
@@ -18,7 +21,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove() {
-        //Здесь будет алгоритм поиска пути
+    public void makeMove(WorldMap worldMap) {
+
     }
 }
