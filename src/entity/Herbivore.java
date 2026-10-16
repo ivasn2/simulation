@@ -17,6 +17,10 @@ public class Herbivore extends Creature {
         Coordinates oldCoordinates = getCoordinates();
         Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, grass);
         if (newCoordinates != null) {
+            if (worldMap.getEntity(newCoordinates) instanceof Grass) {
+                worldMap.removeEntity(newCoordinates);
+            }
+
             worldMap.removeEntity(oldCoordinates);
             worldMap.addEntity(newCoordinates, this);
         }
