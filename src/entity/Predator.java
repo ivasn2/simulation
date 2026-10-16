@@ -1,5 +1,6 @@
 package entity;
 
+import map.Coordinates;
 import map.WorldMap;
 import simulation.BreadthFirstSearch;
 
@@ -22,6 +23,20 @@ public class Predator extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap) {
+
+        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
+
+        Coordinates oldCoordinates = getCoordinates();
+        Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, Herbivore.class);
+
+        if (newCoordinates != null) {
+            if (worldMap.getEntity(newCoordinates) instanceof Herbivore) {
+                worldMap.removeEntity(newCoordinates);
+            }
+
+            worldMap.removeEntity(oldCoordinates);
+            worldMap.addEntity(newCoordinates, this);
+        }
 
     }
 }

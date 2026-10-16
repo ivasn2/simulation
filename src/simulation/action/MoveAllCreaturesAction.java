@@ -14,7 +14,7 @@ public class MoveAllCreaturesAction implements Action {
 
         List<Entity> copyGetAllEntities = new ArrayList<>(worldMap.getAllEntities());
         for (Entity entity : copyGetAllEntities) {
-            if (entity instanceof Creature) {
+            if ((entity instanceof Creature) && (worldMap.getEntity(entity.getCoordinates()) == entity)){
                 ((Creature) entity).makeMove(worldMap);
             }
         }
