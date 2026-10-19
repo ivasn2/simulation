@@ -1,3 +1,4 @@
+
 package entity;
 
 import map.Coordinates;
@@ -28,15 +29,21 @@ public class Predator extends Creature {
 
         Coordinates oldCoordinates = getCoordinates();
         Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, Herbivore.class);
+        Creature target;
 
         if (newCoordinates != null) {
+
             if (worldMap.getEntity(newCoordinates) instanceof Herbivore) {
-                worldMap.removeEntity(newCoordinates);
+                target = (Creature) worldMap.getEntity(newCoordinates);
+                target.setHealth(target.getHealth() - attackPower);
+                if (target.getHealth() <= 0) {
+                    worldMap.removeEntity(oldCoordinates);
+                    worldMap.addEntity(newCoordinates, this);
+                }
+            } else {
+                worldMap.removeEntity(oldCoordinates);
+                worldMap.addEntity(newCoordinates, this);
             }
-
-            worldMap.removeEntity(oldCoordinates);
-            worldMap.addEntity(newCoordinates, this);
         }
-
     }
 }
