@@ -37,10 +37,11 @@ public class Predator extends Creature {
                 target = (Creature) worldMap.getEntity(newCoordinates);
                 target.setHealth(target.getHealth() - attackPower);
                 if (target.getHealth() <= 0) {
+                    worldMap.removeEntity(target.getCoordinates());
                     worldMap.removeEntity(oldCoordinates);
                     worldMap.addEntity(newCoordinates, this);
                 }
-            } else {
+            } else if (worldMap.isCellEmpty(newCoordinates)) {
                 worldMap.removeEntity(oldCoordinates);
                 worldMap.addEntity(newCoordinates, this);
             }
