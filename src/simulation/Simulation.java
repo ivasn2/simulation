@@ -34,14 +34,17 @@ public class Simulation {
         }
     }
 
-
-
     public void nextTurn() {
         for (Action action : turnActions) {
             action.perform(worldMap);
         }
         turnCount++;
         consoleRenderer.render(worldMap);
+        try {
+            Thread.sleep(1100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addActionToInitActions(Action action) {
