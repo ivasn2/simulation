@@ -12,6 +12,7 @@ public class Main {
         simulation.addActionToInitActions(new ReplenishResourceAction(Herbivore.class, 5, 10));
         simulation.addActionToInitActions(new ReplenishResourceAction(Predator.class, 5, 10));
         simulation.addActionToTurnActions(new MoveAllCreaturesAction());
+        simulation.addActionToTurnActions(new ReplenishResourceAction(Grass.class, 5, 10));
         simulation.startSimulation();
     }
 }
