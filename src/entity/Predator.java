@@ -14,6 +14,10 @@ public class Predator extends Creature {
         this.attackPower = attackPower;
     }
 
+    public Predator() {
+        this("🐻", 150, 2, 25);
+    }
+
     public int getAttackPower() {
         return attackPower;
     }

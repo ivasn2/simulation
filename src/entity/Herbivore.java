@@ -10,6 +10,10 @@ public class Herbivore extends Creature {
         super(symbol, hp, speed);
     }
 
+    public Herbivore() {
+        this("🫎", 100, 2); // Передаем дефолтные настройки обычного оленя
+    }
+
     @Override
     public void makeMove(WorldMap worldMap) {
 
