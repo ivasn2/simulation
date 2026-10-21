@@ -25,13 +25,17 @@ public class Simulation {
     }
 
     public void startSimulation() {
+
         for (Action action : initActions) {
             action.perform(worldMap);
         }
         isRunning = true;
-        while (isRunning) {
-            nextTurn();
-        }
+        Thread simulationThread = new Thread(() -> {
+            while (isRunning) {
+                nextTurn();
+            }
+        });
+        simulationThread.start();
     }
 
     public void nextTurn() {
