@@ -58,4 +58,18 @@ public class Simulation {
     public void addActionToTurnActions(Action action) {
         turnActions.add(action);
     }
+
+    public void resumeSimulation() {
+        if (!isRunning) {
+            isRunning = true;
+            Thread simulationThread = new Thread(() -> {
+                while (isRunning) {
+                    nextTurn();
+                }
+            });
+            simulationThread.start();
+        }
+
+
+    }
 }
