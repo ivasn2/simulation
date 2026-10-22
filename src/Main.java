@@ -3,6 +3,8 @@ import simulation.Simulation;
 import simulation.action.MoveAllCreaturesAction;
 import simulation.action.ReplenishResourceAction;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Simulation simulation = new Simulation(15, 30);
@@ -14,5 +16,16 @@ public class Main {
         simulation.addActionToTurnActions(new MoveAllCreaturesAction());
         simulation.addActionToTurnActions(new ReplenishResourceAction(Grass.class, 5, 10));
         simulation.startSimulation();
+
+        Scanner scanner = new Scanner(System.in);
+        String command;
+        while (true) {
+            command = scanner.nextLine();
+            if (command.equals("p")) {
+                simulation.pauseSimulation();
+            } else if (command.equals("s")) {
+                simulation.resumeSimulation();
+            }
+        }
     }
 }
