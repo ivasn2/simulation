@@ -29,6 +29,10 @@ public class Predator extends Creature {
     @Override
     public void makeMove(WorldMap worldMap) {
 
+        if (!starve(worldMap)) {
+            return;
+        }
+
         BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
 
         Coordinates oldCoordinates = getCoordinates();
@@ -44,6 +48,7 @@ public class Predator extends Creature {
                     worldMap.removeEntity(target.getCoordinates());
                     worldMap.removeEntity(oldCoordinates);
                     worldMap.addEntity(newCoordinates, this);
+                    setHealth(getMaxHealth());
                 }
             } else if (worldMap.isCellEmpty(newCoordinates)) {
                 worldMap.removeEntity(oldCoordinates);

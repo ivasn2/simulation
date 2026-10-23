@@ -17,6 +17,11 @@ public class Herbivore extends Creature {
     @Override
     public void makeMove(WorldMap worldMap) {
 
+
+        if (!starve(worldMap)) {
+            return;
+        }
+
         BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
 
         Coordinates oldCoordinates = getCoordinates();
@@ -25,6 +30,7 @@ public class Herbivore extends Creature {
         if (newCoordinates != null) {
             if (worldMap.getEntity(newCoordinates) instanceof Grass) {
                 worldMap.removeEntity(newCoordinates);
+                setHealth(getMaxHealth());
             }
 
             worldMap.removeEntity(oldCoordinates);
