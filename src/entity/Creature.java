@@ -7,14 +7,16 @@
         private int health;
         private final int maxHealth;
         private int speed;
+        private final int starvationDamage;
 
         public abstract void makeMove(WorldMap worldMap);
 
-        public Creature(String symbol, int hp, int speed) {
+        public Creature(String symbol, int hp, int speed, int starvationDamage) {
             super(symbol);
             this.health = hp;
             this.maxHealth = health;
             this.speed = speed;
+            this.starvationDamage = starvationDamage;
         }
 
         public int getHealth() {
@@ -38,7 +40,7 @@
         }
 
         public boolean starve(WorldMap worldMap) {
-           int newHealth = getHealth() - 10;
+           int newHealth = getHealth() - starvationDamage;
            if (newHealth <= 0) {
                worldMap.removeEntity(getCoordinates());
                return false;

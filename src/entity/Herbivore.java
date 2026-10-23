@@ -6,12 +6,12 @@ import simulation.BreadthFirstSearch;
 
 public class Herbivore extends Creature {
 
-    public Herbivore(String symbol, int hp, int speed) {
-        super(symbol, hp, speed);
+    public Herbivore(String symbol, int hp, int speed, int starvationDamage) {
+        super(symbol, hp, speed, starvationDamage);
     }
 
     public Herbivore() {
-        this("🫎", 100, 2); // Передаем дефолтные настройки обычного оленя
+        this("🫎", 100, 1, 10);
     }
 
     @Override

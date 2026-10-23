@@ -9,13 +9,13 @@ public class Predator extends Creature {
 
     private int attackPower;
 
-    public Predator(String symbol, int hp, int speed, int attackPower) {
-        super(symbol, hp, speed);
+    public Predator(String symbol, int hp, int speed, int attackPower, int starvationDamage) {
+        super(symbol, hp, speed, starvationDamage);
         this.attackPower = attackPower;
     }
 
     public Predator() {
-        this("🐻", 150, 2, 25);
+        this("🐻", 150, 1, 50, 20);
     }
 
     public int getAttackPower() {
