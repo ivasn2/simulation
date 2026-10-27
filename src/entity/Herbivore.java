@@ -16,8 +16,6 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap) {
-
-
         if (!starve(worldMap)) {
             return;
         }
@@ -32,7 +30,6 @@ public class Herbivore extends Creature {
                 worldMap.removeEntity(newCoordinates);
                 setHealth(getMaxHealth());
             }
-
             worldMap.removeEntity(oldCoordinates);
             worldMap.addEntity(newCoordinates, this);
         }
