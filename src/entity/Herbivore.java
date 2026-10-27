@@ -16,7 +16,9 @@ public class Herbivore extends Creature {
 
     @Override
     public void makeMove(WorldMap worldMap) {
-        if (!starve(worldMap)) {
+        takeDamage(getStarvationDamage());
+        if (this.isDead()) {
+            worldMap.removeEntity(this.getCoordinates());
             return;
         }
 

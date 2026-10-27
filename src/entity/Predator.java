@@ -29,7 +29,9 @@ public class Predator extends Creature {
     @Override
     public void makeMove(WorldMap worldMap) {
 
-        if (!starve(worldMap)) {
+        takeDamage(getStarvationDamage());
+        if (this.isDead()) {
+            worldMap.removeEntity(this.getCoordinates());
             return;
         }
 
@@ -43,8 +45,8 @@ public class Predator extends Creature {
 
             if (worldMap.getEntity(newCoordinates) instanceof Herbivore) {
                 target = (Creature) worldMap.getEntity(newCoordinates);
-                target.setHealth(target.getHealth() - attackPower);
-                if (target.getHealth() <= 0) {
+                target.takeDamage(getAttackPower());
+                if (target.isDead()) {
                     worldMap.removeEntity(target.getCoordinates());
                     worldMap.removeEntity(oldCoordinates);
                     worldMap.addEntity(newCoordinates, this);

@@ -31,6 +31,10 @@
             return speed;
         }
 
+        public int getStarvationDamage() {
+            return starvationDamage;
+        }
+
         public void setHealth(int health) {
             this.health = health;
         }
@@ -39,17 +43,15 @@
             this.speed = speed;
         }
 
-        public boolean starve(WorldMap worldMap) {
-           int newHealth = getHealth() - starvationDamage;
-           if (newHealth <= 0) {
-               worldMap.removeEntity(getCoordinates());
-               return false;
-           }
-           setHealth(newHealth);
-           return true;
-        }
-
         public boolean canReproduce() {
             return this.health > this.maxHealth / 2;
+        }
+
+        public void takeDamage(int damage) {
+            this.health -= damage;
+        }
+
+        public boolean isDead() {
+            return this.health <= 0;
         }
     }
