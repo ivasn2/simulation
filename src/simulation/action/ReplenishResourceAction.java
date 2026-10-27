@@ -32,7 +32,7 @@ public class ReplenishResourceAction implements Action {
         if (currentCount < minCount) {
             int toSpawnCount = maxCount - currentCount;
             Entity newEntity;
-            for (int i = 0; i < toSpawnCount; i++) {
+            for (int i = 0; ((i < toSpawnCount) && (!worldMap.isFull())); i++) {
 
                 try {
                     newEntity = entityClass.getDeclaredConstructor().newInstance();

@@ -5,6 +5,7 @@ import entity.Entity;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class WorldMap {
 
@@ -46,6 +47,10 @@ public class WorldMap {
     }
 
     public Collection<Entity> getAllEntities() {
-        return entityPositions.values();
+        return List.copyOf(entityPositions.values());
+    }
+
+    public boolean isFull() {
+        return entityPositions.size() == getLength() * getWidth();
     }
 }
