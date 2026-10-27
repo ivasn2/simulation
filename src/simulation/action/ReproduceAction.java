@@ -5,12 +5,11 @@ import entity.Entity;
 import map.Coordinates;
 import map.WorldMap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReproduceAction implements Action {
 
-    Class<? extends Creature> creatureClass;
+    private final Class<? extends Creature> creatureClass;
 
     public ReproduceAction(Class<? extends Creature> creatureClass) {
         this.creatureClass = creatureClass;
@@ -18,61 +17,82 @@ public class ReproduceAction implements Action {
 
     @Override
     public void perform(WorldMap worldMap) {
-        List<Coordinates> birthPlaces = new ArrayList<>();
-        List<Entity> newBabies = new ArrayList<>();
+        Map<Coordinates, Creature> newBabiesMap = new HashMap<>();
+        Set<Coordinates> reservedCells = new HashSet<>();
 
         for (Entity entity : worldMap.getAllEntities()) {
+
             if ((entity.getClass() == creatureClass)) {
                 Creature parent1 = (Creature) entity;
-                for (Entity otherEntity : worldMap.getAllEntities()) {
-                    if ((entity != otherEntity) && (otherEntity.getClass() == creatureClass) && (isNeighborsCells(entity.getCoordinates(), otherEntity.getCoordinates()))) {
-                        Creature parent2 = (Creature) otherEntity;
-                        if ((parent1.getHealth() > parent1.getMaxHealth() / 2) && (parent2.getHealth() > parent2.getMaxHealth() / 2)) {
-                            Coordinates babyPlace = findEmptyNeighborCell(parent1.getCoordinates(), worldMap);
-                            if (babyPlace != null) {
-                                try {
-                                    Entity newBabyEntity = creatureClass.getDeclaredConstructor().newInstance();
-                                    birthPlaces.add(babyPlace);
-                                    newBabies.add(newBabyEntity);
-                                    parent1.setHealth(parent1.getHealth() - parent1.getMaxHealth() / 2);
-                                    parent2.setHealth(parent2.getHealth() - parent2.getMaxHealth() / 2);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
+
+                if (!parent1.canReproduce()) {
+                    continue;
+                }
+
+                Creature parent2 = findNeighborPartner(parent1, worldMap);
+                if ((parent2 != null) && (parent2.canReproduce())) {
+                    Coordinates babyPlace = findEmptyNeighborCell(parent1.getCoordinates(), worldMap, reservedCells);
+
+                    if (babyPlace != null) {
+                        try {
+                            Creature newBabyEntity = creatureClass.getDeclaredConstructor().newInstance();
+                            newBabiesMap.put(babyPlace, newBabyEntity);
+                            reservedCells.add(babyPlace);
+                            parent1.setHealth(parent1.getHealth() - parent1.getMaxHealth() / 2);
+                            parent2.setHealth(parent2.getHealth() - parent2.getMaxHealth() / 2);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
+
                     }
                 }
             }
         }
-        for (int i = 0; i < newBabies.size(); i++) {
-            worldMap.addEntity(birthPlaces.get(i), newBabies.get(i));
+        for (Map.Entry<Coordinates, Creature> entry : newBabiesMap.entrySet()) {
+            worldMap.addEntity(entry.getKey(), entry.getValue());
         }
 
     }
 
-    private static boolean isNeighborsCells(Coordinates coordinatesEntity, Coordinates coordinatesOtherEntity) {
-        int deltaX = Math.abs(coordinatesEntity.getX() - coordinatesOtherEntity.getX());
-        int deltaY = Math.abs(coordinatesEntity.getY() - coordinatesOtherEntity.getY());
-        return deltaX + deltaY == 1;
-    }
+    private Creature findNeighborPartner(Creature parent, WorldMap worldMap) {
+        Coordinates parentCoord = parent.getCoordinates();
 
-    private static Coordinates findEmptyNeighborCell(Coordinates parent1, WorldMap worldMap) {
         List<Coordinates> neighbors = new ArrayList<>();
-        neighbors.add(new Coordinates(parent1.getX() + 1, parent1.getY())); // Право
-        neighbors.add(new Coordinates(parent1.getX() - 1, parent1.getY())); // Лево
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() + 1)); // Верх
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() - 1)); // Низ
-        for (Coordinates neighbor : neighbors) {
-            if ( (neighbor.getX() >= 0)
-                    && (neighbor.getX() <= worldMap.getLength() - 1)
-                    && ((neighbor.getY() >= 0) && (neighbor.getY() <= worldMap.getWidth() - 1)
-                    && (worldMap.isCellEmpty(neighbor)))) {
-                return neighbor;
+        neighbors.add(new Coordinates(parentCoord.getX() + 1, parentCoord.getY())); // Право
+        neighbors.add(new Coordinates(parentCoord.getX() - 1, parentCoord.getY())); // Лево
+        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() + 1)); // Верх
+        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() - 1)); // Низ
+
+        for (Coordinates candidate : neighbors) {
+            if ( (candidate.getX() >= 0)
+                    && (candidate.getX() <= worldMap.getLength() - 1)
+                    && (candidate.getY() >= 0 && candidate.getY() <= worldMap.getWidth() - 1)
+                    && (!worldMap.isCellEmpty(candidate))
+                    && (worldMap.getEntity(candidate).getClass() == creatureClass)) {
+                return (Creature) worldMap.getEntity(candidate);
             }
         }
         return null;
     }
 
+    private static Coordinates findEmptyNeighborCell(Coordinates parent1, WorldMap worldMap, Set<Coordinates> reservedCells) {
+        List<Coordinates> neighbors = new ArrayList<>();
 
-}
+        neighbors.add(new Coordinates(parent1.getX() + 1, parent1.getY()));
+        neighbors.add(new Coordinates(parent1.getX() - 1, parent1.getY()));
+        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() + 1));
+        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() - 1));
+
+        for (Coordinates neighbor : neighbors) {
+            if ( (neighbor.getX() >= 0)
+                    && (neighbor.getX() <= worldMap.getLength() - 1)
+                    && (neighbor.getY() >= 0 && neighbor.getY() <= worldMap.getWidth() - 1)
+                    && (worldMap.isCellEmpty(neighbor))
+                    && (!reservedCells.contains(neighbor))) {
+                return neighbor;
+                }
+            }
+        return null;
+        }
+    }
+

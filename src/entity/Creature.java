@@ -48,4 +48,8 @@
            setHealth(newHealth);
            return true;
         }
+
+        public boolean canReproduce() {
+            return this.health > this.maxHealth / 2;
+        }
     }
