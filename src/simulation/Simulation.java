@@ -5,12 +5,19 @@ import simulation.action.Action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 
 public class Simulation {
 
     private int turnCount = 0;
-    private boolean isRunning;
+    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledFuture<?> turnTask;
+    private static final long TURN_DELAY_MS = 1100;
+
     private WorldMap worldMap;
     private List<Action> initActions = new ArrayList<>();
     private List<Action> turnActions = new ArrayList<>();
@@ -21,21 +28,16 @@ public class Simulation {
     }
 
     public void pauseSimulation() {
-        isRunning = false;
+        if (turnTask != null) {
+            turnTask.cancel(false);
+        }
     }
 
     public void startSimulation() {
-
         for (Action action : initActions) {
             action.perform(worldMap);
         }
-        isRunning = true;
-        Thread simulationThread = new Thread(() -> {
-            while (isRunning) {
-                nextTurn();
-            }
-        });
-        simulationThread.start();
+        resumeSimulation();
     }
 
     public void nextTurn() {
@@ -44,11 +46,6 @@ public class Simulation {
         }
         turnCount++;
         consoleRenderer.render(worldMap);
-        try {
-            Thread.sleep(1100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void addActionToInitActions(Action action) {
@@ -60,16 +57,8 @@ public class Simulation {
     }
 
     public void resumeSimulation() {
-        if (!isRunning) {
-            isRunning = true;
-            Thread simulationThread = new Thread(() -> {
-                while (isRunning) {
-                    nextTurn();
-                }
-            });
-            simulationThread.start();
+        if ((turnTask == null) || (turnTask.isDone())) {
+            turnTask = executor.scheduleWithFixedDelay(this::nextTurn, 0, TURN_DELAY_MS, TimeUnit.MILLISECONDS);
         }
-
-
     }
 }
