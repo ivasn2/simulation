@@ -5,6 +5,8 @@ import map.Coordinates;
 import map.WorldMap;
 import simulation.BreadthFirstSearch;
 
+import java.util.List;
+
 public class Predator extends Creature {
 
     private int attackPower;
@@ -35,26 +37,30 @@ public class Predator extends Creature {
             return;
         }
 
-        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
-
         Coordinates oldCoordinates = getCoordinates();
-        Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, Herbivore.class);
-        Creature target;
+        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, Herbivore.class);
+        if (!path.isEmpty()) {
+            int stepsToTake = Math.min(path.size(), getSpeed());
+            Coordinates targetCell = path.get(stepsToTake - 1);
 
-        if (newCoordinates != null) {
-
-            if (worldMap.getEntity(newCoordinates) instanceof Herbivore) {
-                target = (Creature) worldMap.getEntity(newCoordinates);
+            if (targetCell.equals(path.getLast())) {
+                Creature target = (Creature) worldMap.getEntity(targetCell);
                 target.takeDamage(getAttackPower());
+
                 if (target.isDead()) {
-                    worldMap.removeEntity(target.getCoordinates());
+                    worldMap.removeEntity(targetCell);
                     worldMap.removeEntity(oldCoordinates);
-                    worldMap.addEntity(newCoordinates, this);
+                    worldMap.addEntity(targetCell, this);
                     setHealth(getMaxHealth());
+                } else if (path.size() > 1) {
+                    Coordinates penultimateCell = path.get(path.size() - 2);
+                    worldMap.removeEntity(oldCoordinates);
+                    worldMap.addEntity(penultimateCell, this);
                 }
-            } else if (worldMap.isCellEmpty(newCoordinates)) {
+
+            } else {
                 worldMap.removeEntity(oldCoordinates);
-                worldMap.addEntity(newCoordinates, this);
+                worldMap.addEntity(targetCell, this);
             }
         }
     }

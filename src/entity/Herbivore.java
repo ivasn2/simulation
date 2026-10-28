@@ -4,6 +4,8 @@ import map.Coordinates;
 import map.WorldMap;
 import simulation.BreadthFirstSearch;
 
+import java.util.List;
+
 public class Herbivore extends Creature {
 
     public Herbivore(String symbol, int hp, int speed, int starvationDamage) {
@@ -22,18 +24,21 @@ public class Herbivore extends Creature {
             return;
         }
 
-        BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
-
         Coordinates oldCoordinates = getCoordinates();
-        Coordinates newCoordinates = breadthFirstSearch.breadthFirstSearch(getCoordinates(), worldMap, Grass.class);
+        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, Grass.class);
+        if (!path.isEmpty()) {
+            int stepsToTake = Math.min(path.size(), getSpeed());
+            Coordinates targetCell = path.get(stepsToTake - 1);
 
-        if (newCoordinates != null) {
-            if (worldMap.getEntity(newCoordinates) instanceof Grass) {
-                worldMap.removeEntity(newCoordinates);
+            if (targetCell.equals(path.getLast())) {
+                worldMap.removeEntity(targetCell);
+                worldMap.removeEntity(oldCoordinates);
+                worldMap.addEntity(targetCell, this);
                 setHealth(getMaxHealth());
+            } else {
+                worldMap.removeEntity(oldCoordinates);
+                worldMap.addEntity(targetCell, this);
             }
-            worldMap.removeEntity(oldCoordinates);
-            worldMap.addEntity(newCoordinates, this);
         }
     }
 }

@@ -8,14 +8,13 @@ import java.util.*;
 
 public class BreadthFirstSearch {
 
-    public Coordinates breadthFirstSearch(Coordinates coordinates, WorldMap worldMap, Class<?> classEntity) {
+    public static List<Coordinates> findPath(Coordinates start, WorldMap worldMap, Class<? extends Entity> targetClass) {
         Set<Coordinates> visitedCoordinates = new HashSet<>();
         Map<Coordinates, Coordinates> arrivedCoordinates = new HashMap<>();
         Queue<Coordinates> cellsToExplore = new LinkedList<>();
 
-
-        visitedCoordinates.add(coordinates);
-        cellsToExplore.add(coordinates);
+        visitedCoordinates.add(start);
+        cellsToExplore.add(start);
 
         while (!cellsToExplore.isEmpty()) {
             List<Coordinates> cells = new ArrayList<>();
@@ -36,30 +35,32 @@ public class BreadthFirstSearch {
                             && (!visitedCoordinates.contains(neighbor))
 
                             && ((worldMap.isCellEmpty(neighbor))
-                            || (worldMap.getEntity(neighbor).getClass() == classEntity)))) {
+                            || (worldMap.getEntity(neighbor).getClass() == targetClass)))) {
 
                                 cellsToExplore.add(neighbor);
                                 visitedCoordinates.add(neighbor);
                                 arrivedCoordinates.put(neighbor, currentCell);
 
-                                if ((!worldMap.isCellEmpty(neighbor)) && (worldMap.getEntity(neighbor).getClass() == classEntity)) {
+                                if ((!worldMap.isCellEmpty(neighbor)) && (worldMap.getEntity(neighbor).getClass() == targetClass)) {
                                     // TODO: вынести проверку цели в метод
                                     Coordinates current = neighbor;
+                                    List<Coordinates> coordinatesList = new ArrayList<>();
+                                    coordinatesList.add(neighbor);
                                     while (true) {
                                         Coordinates previous = arrivedCoordinates.get(current);
-                                        if (previous.equals(coordinates)) {
+                                        if (previous.equals(start)) {
                                             break;
                                         }
                                         else {
                                             current = previous;
+                                            coordinatesList.addFirst(current);
                                         }
-
                                     }
-                                    return current;
+                                    return coordinatesList;
                                 }
                     }
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 }
