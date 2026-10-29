@@ -58,13 +58,17 @@
         public abstract void interact(Entity target, WorldMap worldMap, List<Coordinates> path);
 
         public void makeMove(WorldMap worldMap) {
+
             takeDamage(getStarvationDamage());
+
             if (isDead()) {
                 worldMap.removeEntity(getCoordinates());
                 return;
             }
+
             Coordinates oldCoordinates = getCoordinates();
             List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
+
             if (!path.isEmpty()) {
                 int stepsToTake = Math.min(path.size(), getSpeed());
                 Coordinates targetCell = path.get(stepsToTake - 1);

@@ -7,20 +7,20 @@ import map.WorldMap;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class ReplenishResourceAction implements Action {
+public class SpawnEntitiesAction implements Action {
 
     private Class<? extends Entity> entityClass;
     private final Supplier<? extends Entity> entityFactory;
-    private int minCount;
-    private int maxCount;
+    private int refillBelow;
+    private int refillTo;
     private final Random rnd = new Random();
 
 
-    public ReplenishResourceAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int minCount, int maxCount) {
+    public SpawnEntitiesAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int refillBelow, int refillTo) {
         this.entityClass = entityClass;
         this.entityFactory = entityFactory;
-        this.minCount = minCount;
-        this.maxCount = maxCount;
+        this.refillBelow = refillBelow;
+        this.refillTo = refillTo;
     }
 
     @Override
@@ -31,8 +31,8 @@ public class ReplenishResourceAction implements Action {
                 currentCount++;
             }
         }
-        if (currentCount < minCount) {
-            int toSpawnCount = maxCount - currentCount;
+        if (currentCount < refillBelow) {
+            int toSpawnCount = refillTo - currentCount;
             Entity newEntity;
             for (int i = 0; ((i < toSpawnCount) && (!worldMap.isFull())); i++) {
 
@@ -46,9 +46,9 @@ public class ReplenishResourceAction implements Action {
 
 
     public Coordinates findEmptyCell(WorldMap worldMap) {
-        Coordinates coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
+        Coordinates coordinates = new Coordinates(rnd.nextInt(worldMap.getRows()), rnd.nextInt(worldMap.getColumns()));
         while (!worldMap.isCellEmpty(coordinates)) {
-            coordinates = new Coordinates(rnd.nextInt(worldMap.getLength()), rnd.nextInt(worldMap.getWidth()));
+            coordinates = new Coordinates(rnd.nextInt(worldMap.getRows()), rnd.nextInt(worldMap.getColumns()));
         }
         return coordinates;
     }

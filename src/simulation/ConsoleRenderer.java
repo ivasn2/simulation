@@ -6,8 +6,8 @@
     public class ConsoleRenderer {
 
         public void render(WorldMap worldMap) {
-            for (int i = 0; i < worldMap.getLength(); i++) {
-                for (int j = 0; j < worldMap.getWidth(); j++) {
+            for (int i = 0; i < worldMap.getRows(); i++) {
+                for (int j = 0; j < worldMap.getColumns(); j++) {
                     Coordinates coordinates = new Coordinates(i, j);
                     if (worldMap.isCellEmpty(coordinates)) {
                         System.out.print("⬛");

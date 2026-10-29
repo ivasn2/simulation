@@ -10,21 +10,21 @@ import java.util.List;
 public class WorldMap {
 
     private HashMap<Coordinates, Entity> entityPositions;
-    private int length;
-    private int width;
+    private int rows;
+    private int columns;
 
-    public int getLength() {
-        return length;
+    public int getRows() {
+        return rows;
     }
 
-    public int getWidth() {
-        return width;
+    public int getColumns() {
+        return columns;
     }
 
-    public WorldMap(int length, int width) {
+    public WorldMap(int rows, int columns) {
         this.entityPositions = new HashMap<>();
-        this.length = length;
-        this.width = width;
+        this.rows = rows;
+        this.columns = columns;
     }
 
     public void addEntity(Coordinates coordinates, Entity entity) {
@@ -51,6 +51,6 @@ public class WorldMap {
     }
 
     public boolean isFull() {
-        return entityPositions.size() == getLength() * getWidth();
+        return entityPositions.size() == getRows() * getColumns();
     }
 }

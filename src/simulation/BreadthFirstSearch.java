@@ -10,7 +10,7 @@ public class BreadthFirstSearch {
 
     public static List<Coordinates> findPath(Coordinates start, WorldMap worldMap, Class<? extends Entity> targetClass) {
         Set<Coordinates> visitedCoordinates = new HashSet<>();
-        Map<Coordinates, Coordinates> arrivedCoordinates = new HashMap<>();
+        Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
         Queue<Coordinates> cellsToExplore = new LinkedList<>();
 
         visitedCoordinates.add(start);
@@ -19,18 +19,19 @@ public class BreadthFirstSearch {
         while (!cellsToExplore.isEmpty()) {
             List<Coordinates> cells = new ArrayList<>();
             Coordinates currentCell = cellsToExplore.poll();
-            Coordinates cellRight = new Coordinates(currentCell.getX() + 1, currentCell.getY());
-            cells.add(cellRight);
-            Coordinates cellLeft = new Coordinates(currentCell.getX() - 1, currentCell.getY());
-            cells.add(cellLeft);
-            Coordinates cellUp = new Coordinates(currentCell.getX(), currentCell.getY() + 1);
-            cells.add(cellUp);
-            Coordinates cellDown = new Coordinates(currentCell.getX(), currentCell.getY() - 1);
+
+            Coordinates cellDown = new Coordinates(currentCell.getX() + 1, currentCell.getY());
             cells.add(cellDown);
+            Coordinates cellUp = new Coordinates(currentCell.getX() - 1, currentCell.getY());
+            cells.add(cellUp);
+            Coordinates cellRight = new Coordinates(currentCell.getX(), currentCell.getY() + 1);
+            cells.add(cellRight);
+            Coordinates cellLeft = new Coordinates(currentCell.getX(), currentCell.getY() - 1);
+            cells.add(cellLeft);
 
             for (Coordinates neighbor : cells) {
-                    if (    (neighbor.getX() >= 0) && (neighbor.getX() <= worldMap.getLength() - 1)
-                            && ((neighbor.getY() >= 0) && (neighbor.getY() <= worldMap.getWidth() - 1)
+                    if (    (neighbor.getX() >= 0) && (neighbor.getX() <= worldMap.getRows() - 1)
+                            && ((neighbor.getY() >= 0) && (neighbor.getY() <= worldMap.getColumns() - 1)
 
                             && (!visitedCoordinates.contains(neighbor))
 
@@ -39,7 +40,7 @@ public class BreadthFirstSearch {
 
                                 cellsToExplore.add(neighbor);
                                 visitedCoordinates.add(neighbor);
-                                arrivedCoordinates.put(neighbor, currentCell);
+                                cameFrom.put(neighbor, currentCell);
 
                                 if ((!worldMap.isCellEmpty(neighbor)) && (worldMap.getEntity(neighbor).getClass() == targetClass)) {
                                     // TODO: вынести проверку цели в метод
@@ -47,12 +48,12 @@ public class BreadthFirstSearch {
                                     List<Coordinates> coordinatesList = new ArrayList<>();
                                     coordinatesList.add(neighbor);
                                     while (true) {
-                                        Coordinates previous = arrivedCoordinates.get(current);
-                                        if (previous.equals(start)) {
+                                        Coordinates cameFromCell = cameFrom.get(current);
+                                        if (cameFromCell.equals(start)) {
                                             break;
                                         }
                                         else {
-                                            current = previous;
+                                            current = cameFromCell;
                                             coordinatesList.addFirst(current);
                                         }
                                     }

@@ -58,15 +58,16 @@ public class ReproduceAction implements Action {
         Coordinates parentCoord = parent.getCoordinates();
 
         List<Coordinates> neighbors = new ArrayList<>();
-        neighbors.add(new Coordinates(parentCoord.getX() + 1, parentCoord.getY())); // Право
-        neighbors.add(new Coordinates(parentCoord.getX() - 1, parentCoord.getY())); // Лево
-        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() + 1)); // Верх
-        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() - 1)); // Низ
+        neighbors.add(new Coordinates(parentCoord.getX() + 1, parentCoord.getY())); // Вниз
+        neighbors.add(new Coordinates(parentCoord.getX() - 1, parentCoord.getY())); // Вверх
+        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() + 1)); // Вправо
+        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() - 1)); // Влево
+
 
         for (Coordinates candidate : neighbors) {
             if ( (candidate.getX() >= 0)
-                    && (candidate.getX() <= worldMap.getLength() - 1)
-                    && (candidate.getY() >= 0 && candidate.getY() <= worldMap.getWidth() - 1)
+                    && (candidate.getX() <= worldMap.getRows() - 1)
+                    && (candidate.getY() >= 0 && candidate.getY() <= worldMap.getColumns() - 1)
                     && (!worldMap.isCellEmpty(candidate))
                     && (worldMap.getEntity(candidate).getClass() == creatureClass)) {
                 return (Creature) worldMap.getEntity(candidate);
@@ -76,17 +77,18 @@ public class ReproduceAction implements Action {
     }
 
     private static Coordinates findEmptyNeighborCell(Coordinates parent1, WorldMap worldMap, Set<Coordinates> reservedCells) {
-        List<Coordinates> neighbors = new ArrayList<>();
 
-        neighbors.add(new Coordinates(parent1.getX() + 1, parent1.getY()));
-        neighbors.add(new Coordinates(parent1.getX() - 1, parent1.getY()));
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() + 1));
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() - 1));
+        List<Coordinates> neighbors = new ArrayList<>();
+        neighbors.add(new Coordinates(parent1.getX() + 1, parent1.getY())); // Вниз
+        neighbors.add(new Coordinates(parent1.getX() - 1, parent1.getY())); // Вверх
+        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() + 1)); // Вправо
+        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() - 1)); // Влево
+
 
         for (Coordinates neighbor : neighbors) {
             if ( (neighbor.getX() >= 0)
-                    && (neighbor.getX() <= worldMap.getLength() - 1)
-                    && (neighbor.getY() >= 0 && neighbor.getY() <= worldMap.getWidth() - 1)
+                    && (neighbor.getX() <= worldMap.getRows() - 1)
+                    && (neighbor.getY() >= 0 && neighbor.getY() <= worldMap.getColumns() - 1)
                     && (worldMap.isCellEmpty(neighbor))
                     && (!reservedCells.contains(neighbor))) {
                 return neighbor;
