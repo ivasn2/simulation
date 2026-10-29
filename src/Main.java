@@ -9,6 +9,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        final String PAUSE = "p";
+        final String RESUME = "s";
+        final String QUIT = "q";
+
         Simulation simulation = new Simulation(15, 30);
 
         simulation.addActionToInitActions(new ReplenishResourceAction(Grass.class, Grass::new, 20, 40));
@@ -26,12 +30,15 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         String command;
-        while (true) {
-            command = scanner.nextLine();
-            if (command.equals("p")) {
+        while (scanner.hasNextLine()) {
+            command = scanner.nextLine().trim();
+            if (command.equals(PAUSE)) {
                 simulation.pauseSimulation();
-            } else if (command.equals("s")) {
+            } else if (command.equals(RESUME)) {
                 simulation.resumeSimulation();
+            } else if (command.equals(QUIT)) {
+                simulation.pauseSimulation();
+                break;
             }
         }
     }
