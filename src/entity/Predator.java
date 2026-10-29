@@ -29,39 +29,23 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove(WorldMap worldMap) {
+    public Class<? extends Entity> getTargetClass() {
+        return Herbivore.class;
+    }
 
-        takeDamage(getStarvationDamage());
-        if (this.isDead()) {
-            worldMap.removeEntity(this.getCoordinates());
-            return;
-        }
-
-        Coordinates oldCoordinates = getCoordinates();
-        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, Herbivore.class);
-        if (!path.isEmpty()) {
-            int stepsToTake = Math.min(path.size(), getSpeed());
-            Coordinates targetCell = path.get(stepsToTake - 1);
-
-            if (targetCell.equals(path.getLast())) {
-                Creature target = (Creature) worldMap.getEntity(targetCell);
-                target.takeDamage(getAttackPower());
-
-                if (target.isDead()) {
-                    worldMap.removeEntity(targetCell);
-                    worldMap.removeEntity(oldCoordinates);
-                    worldMap.addEntity(targetCell, this);
-                    setHealth(getMaxHealth());
-                } else if (path.size() > 1) {
-                    Coordinates penultimateCell = path.get(path.size() - 2);
-                    worldMap.removeEntity(oldCoordinates);
-                    worldMap.addEntity(penultimateCell, this);
-                }
-
-            } else {
-                worldMap.removeEntity(oldCoordinates);
-                worldMap.addEntity(targetCell, this);
-            }
+    @Override
+    public void interact(Entity target, WorldMap worldMap, List<Coordinates> path) {
+        Creature target1 = (Creature) worldMap.getEntity(target.getCoordinates());
+        target1.takeDamage(getAttackPower());
+        if (target1.isDead()) {
+            worldMap.removeEntity(target.getCoordinates());
+            worldMap.removeEntity(getCoordinates());
+            worldMap.addEntity(target.getCoordinates(), this);
+            setHealth(getMaxHealth());
+        } else if (path.size() > 1) {
+            Coordinates penultimateCell = path.get(path.size() - 2);
+            worldMap.removeEntity(getCoordinates());
+            worldMap.addEntity(penultimateCell, this);
         }
     }
 }

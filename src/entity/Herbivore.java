@@ -16,29 +16,17 @@ public class Herbivore extends Creature {
         this("🫎", 100, 1, 10);
     }
 
+
     @Override
-    public void makeMove(WorldMap worldMap) {
-        takeDamage(getStarvationDamage());
-        if (this.isDead()) {
-            worldMap.removeEntity(this.getCoordinates());
-            return;
-        }
+    public Class<? extends Entity> getTargetClass() {
+        return Grass.class;
+    }
 
-        Coordinates oldCoordinates = getCoordinates();
-        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, Grass.class);
-        if (!path.isEmpty()) {
-            int stepsToTake = Math.min(path.size(), getSpeed());
-            Coordinates targetCell = path.get(stepsToTake - 1);
-
-            if (targetCell.equals(path.getLast())) {
-                worldMap.removeEntity(targetCell);
-                worldMap.removeEntity(oldCoordinates);
-                worldMap.addEntity(targetCell, this);
-                setHealth(getMaxHealth());
-            } else {
-                worldMap.removeEntity(oldCoordinates);
-                worldMap.addEntity(targetCell, this);
-            }
-        }
+    @Override
+    public void interact(Entity target, WorldMap worldMap, List<Coordinates> path) {
+        worldMap.removeEntity(target.getCoordinates());
+        worldMap.removeEntity(getCoordinates());
+        worldMap.addEntity(target.getCoordinates(), this);
+        setHealth(getMaxHealth());
     }
 }

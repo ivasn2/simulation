@@ -1,15 +1,17 @@
     package entity;
 
+    import map.Coordinates;
     import map.WorldMap;
+    import simulation.BreadthFirstSearch;
+
+    import java.util.List;
 
     public abstract class Creature extends Entity {
 
         private int health;
         private final int maxHealth;
-        private int speed;
+        private final int speed;
         private final int starvationDamage;
-
-        public abstract void makeMove(WorldMap worldMap);
 
         public Creature(String symbol, int hp, int speed, int starvationDamage) {
             super(symbol);
@@ -39,10 +41,6 @@
             this.health = health;
         }
 
-        public void setSpeed(int speed) {
-            this.speed = speed;
-        }
-
         public boolean canReproduce() {
             return this.health > this.maxHealth / 2;
         }
@@ -53,5 +51,28 @@
 
         public boolean isDead() {
             return this.health <= 0;
+        }
+
+        public abstract Class<? extends Entity> getTargetClass();
+
+        public abstract void interact(Entity target, WorldMap worldMap, List<Coordinates> path);
+
+        public void makeMove(WorldMap worldMap) {
+            takeDamage(getStarvationDamage());
+            if (isDead()) {
+                worldMap.removeEntity(getCoordinates());
+                return;
+            }
+            Coordinates oldCoordinates = getCoordinates();
+            List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
+            if (!path.isEmpty()) {
+                int stepsToTake = Math.min(path.size(), getSpeed());
+                Coordinates targetCell = path.get(stepsToTake - 1);
+                if (targetCell.equals(path.getLast())) {
+                    interact(worldMap.getEntity(targetCell), worldMap, path);
+                } else {
+                    worldMap.removeEntity(oldCoordinates);
+                    worldMap.addEntity(targetCell, this);}
+            }
         }
     }
