@@ -11,14 +11,14 @@ public class Main {
 
         Simulation simulation = new Simulation(15, 30);
 
-        simulation.addActionToInitActions(new ReplenishResourceAction(Grass.class, 20, 40));
-        simulation.addActionToInitActions(new ReplenishResourceAction(Rock.class, 5, 10));
-        simulation.addActionToInitActions(new ReplenishResourceAction(Tree.class, 5, 10));
-        simulation.addActionToInitActions(new ReplenishResourceAction(Herbivore.class, 5, 10));
-        simulation.addActionToInitActions(new ReplenishResourceAction(Predator.class, 5, 10));
+        simulation.addActionToInitActions(new ReplenishResourceAction(Grass.class, Grass::new, 20, 40));
+        simulation.addActionToInitActions(new ReplenishResourceAction(Rock.class, Rock::new, 5, 10));
+        simulation.addActionToInitActions(new ReplenishResourceAction(Tree.class, Tree::new, 5, 10));
+        simulation.addActionToInitActions(new ReplenishResourceAction(Herbivore.class, Herbivore::new, 5, 10));
+        simulation.addActionToInitActions(new ReplenishResourceAction(Predator.class, Predator::new, 5, 10));
 
         simulation.addActionToTurnActions(new MoveAllCreaturesAction());
-        simulation.addActionToTurnActions(new ReplenishResourceAction(Grass.class, 5, 10));
+        simulation.addActionToTurnActions(new ReplenishResourceAction(Grass.class, Grass::new, 5, 10));
         simulation.addActionToTurnActions(new ReproduceAction(Herbivore.class));
         simulation.addActionToTurnActions(new ReproduceAction(Predator.class));
 

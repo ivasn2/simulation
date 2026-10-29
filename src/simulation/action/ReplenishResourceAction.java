@@ -1,22 +1,24 @@
 package simulation.action;
 
 import entity.Entity;
-import entity.Grass;
 import map.Coordinates;
 import map.WorldMap;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class ReplenishResourceAction implements Action {
 
     private Class<? extends Entity> entityClass;
+    private final Supplier<? extends Entity> entityFactory;
     private int minCount;
     private int maxCount;
     private final Random rnd = new Random();
 
 
-    public ReplenishResourceAction(Class<? extends Entity> entityClass, int minCount, int maxCount) {
+    public ReplenishResourceAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int minCount, int maxCount) {
         this.entityClass = entityClass;
+        this.entityFactory = entityFactory;
         this.minCount = minCount;
         this.maxCount = maxCount;
     }
@@ -34,11 +36,7 @@ public class ReplenishResourceAction implements Action {
             Entity newEntity;
             for (int i = 0; ((i < toSpawnCount) && (!worldMap.isFull())); i++) {
 
-                try {
-                    newEntity = entityClass.getDeclaredConstructor().newInstance();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                newEntity = entityFactory.get();
 
                 Coordinates freeCell = findEmptyCell(worldMap);
                 worldMap.addEntity(freeCell, newEntity);
