@@ -3,13 +3,12 @@ package entity;
 
 import map.Coordinates;
 import map.WorldMap;
-import simulation.BreadthFirstSearch;
 
 import java.util.List;
 
 public class Predator extends Creature {
 
-    private int attackPower;
+    private final int attackPower;
 
     public Predator(String symbol, int hp, int speed, int attackPower, int starvationDamage) {
         super(symbol, hp, speed, starvationDamage);
@@ -17,15 +16,11 @@ public class Predator extends Creature {
     }
 
     public Predator() {
-        this("🐻", 150, 1, 50, 20);
+        this("🐻", 150, 2, 50, 10);
     }
 
     public int getAttackPower() {
         return attackPower;
-    }
-
-    public void setAttackPower(int attackPower) {
-        this.attackPower = attackPower;
     }
 
     @Override

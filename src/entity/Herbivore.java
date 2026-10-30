@@ -2,7 +2,6 @@ package entity;
 
 import map.Coordinates;
 import map.WorldMap;
-import simulation.BreadthFirstSearch;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class Herbivore extends Creature {
     }
 
     public Herbivore() {
-        this("🫎", 100, 1, 10);
+        this("🫎", 100, 2, 5);
     }
 
 
