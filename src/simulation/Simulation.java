@@ -18,10 +18,10 @@ public class Simulation {
     private ScheduledFuture<?> turnTask;
     private static final long TURN_DELAY_MS = 1100;
 
-    private WorldMap worldMap;
-    private List<Action> initActions = new ArrayList<>();
-    private List<Action> turnActions = new ArrayList<>();
-    private ConsoleRenderer consoleRenderer = new ConsoleRenderer();
+    private final WorldMap worldMap;
+    private final List<Action> initActions = new ArrayList<>();
+    private final List<Action> turnActions = new ArrayList<>();
+    private final ConsoleRenderer consoleRenderer = new ConsoleRenderer();
 
     public Simulation(int length, int width) {
         this.worldMap = new WorldMap(length, width);
@@ -45,7 +45,7 @@ public class Simulation {
             action.perform(worldMap);
         }
         turnCount++;
-        consoleRenderer.render(worldMap);
+        consoleRenderer.render(worldMap, turnCount);
     }
 
     public void addActionToInitActions(Action action) {

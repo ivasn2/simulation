@@ -9,10 +9,10 @@ import java.util.function.Supplier;
 
 public class SpawnEntitiesAction implements Action {
 
-    private Class<? extends Entity> entityClass;
+    private final Class<? extends Entity> entityClass;
     private final Supplier<? extends Entity> entityFactory;
-    private int refillBelow;
-    private int refillTo;
+    private final int refillBelow;
+    private final int refillTo;
     private final Random rnd = new Random();
 
 

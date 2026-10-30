@@ -9,9 +9,9 @@ import java.util.List;
 
 public class WorldMap {
 
-    private HashMap<Coordinates, Entity> entityPositions;
-    private int rows;
-    private int columns;
+    private final HashMap<Coordinates, Entity> entityPositions;
+    private final int rows;
+    private final int columns;
 
     public int getRows() {
         return rows;
