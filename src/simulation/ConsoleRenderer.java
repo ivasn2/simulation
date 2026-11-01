@@ -10,7 +10,7 @@
                 for (int j = 0; j < worldMap.getColumns(); j++) {
                     Coordinates coordinates = new Coordinates(i, j);
                     if (worldMap.isCellEmpty(coordinates)) {
-                        System.out.print("⬛");
+                        System.out.print("\uD83D\uDFEB");
                     } else {
                         System.out.print(worldMap.getEntity(coordinates).getSymbol());
                     }
