@@ -46,6 +46,12 @@ public class WorldMap {
             return !entityPositions.containsKey(coordinates);
     }
 
+    public boolean isCellOnTheMap(Coordinates cell) {
+        return (cell.getX() >= 0)
+                && (cell.getX() <= getRows() - 1)
+                && (cell.getY() >= 0 && cell.getY() <= getColumns() - 1);
+    }
+
     public Collection<Entity> getAllEntities() {
         return List.copyOf(entityPositions.values());
     }

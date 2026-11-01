@@ -30,13 +30,12 @@ public class BreadthFirstSearch {
             cells.add(cellLeft);
 
             for (Coordinates neighbor : cells) {
-                    if (    (neighbor.getX() >= 0) && (neighbor.getX() <= worldMap.getRows() - 1)
-                            && ((neighbor.getY() >= 0) && (neighbor.getY() <= worldMap.getColumns() - 1)
+                    if (    (worldMap.isCellOnTheMap(neighbor))
 
                             && (!visitedCoordinates.contains(neighbor))
 
                             && ((worldMap.isCellEmpty(neighbor))
-                            || (worldMap.getEntity(neighbor).getClass() == targetClass)))) {
+                            || (worldMap.getEntity(neighbor).getClass() == targetClass))) {
 
                                 cellsToExplore.add(neighbor);
                                 visitedCoordinates.add(neighbor);

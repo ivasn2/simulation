@@ -55,19 +55,17 @@ public class ReproduceAction implements Action {
     }
 
     private Creature findNeighborPartner(Creature parent, WorldMap worldMap) {
-        Coordinates parentCoord = parent.getCoordinates();
+        Coordinates parentCoordinates = parent.getCoordinates();
 
         List<Coordinates> neighbors = new ArrayList<>();
-        neighbors.add(new Coordinates(parentCoord.getX() + 1, parentCoord.getY())); // Вниз
-        neighbors.add(new Coordinates(parentCoord.getX() - 1, parentCoord.getY())); // Вверх
-        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() + 1)); // Вправо
-        neighbors.add(new Coordinates(parentCoord.getX(), parentCoord.getY() - 1)); // Влево
+        neighbors.add(new Coordinates(parentCoordinates.getX() + 1, parentCoordinates.getY())); // Вниз
+        neighbors.add(new Coordinates(parentCoordinates.getX() - 1, parentCoordinates.getY())); // Вверх
+        neighbors.add(new Coordinates(parentCoordinates.getX(), parentCoordinates.getY() + 1)); // Вправо
+        neighbors.add(new Coordinates(parentCoordinates.getX(), parentCoordinates.getY() - 1)); // Влево
 
 
         for (Coordinates candidate : neighbors) {
-            if ( (candidate.getX() >= 0)
-                    && (candidate.getX() <= worldMap.getRows() - 1)
-                    && (candidate.getY() >= 0 && candidate.getY() <= worldMap.getColumns() - 1)
+            if (worldMap.isCellOnTheMap(candidate)
                     && (!worldMap.isCellEmpty(candidate))
                     && (worldMap.getEntity(candidate).getClass() == creatureClass)) {
                 return (Creature) worldMap.getEntity(candidate);
@@ -86,15 +84,13 @@ public class ReproduceAction implements Action {
 
 
         for (Coordinates neighbor : neighbors) {
-            if ( (neighbor.getX() >= 0)
-                    && (neighbor.getX() <= worldMap.getRows() - 1)
-                    && (neighbor.getY() >= 0 && neighbor.getY() <= worldMap.getColumns() - 1)
-                    && (worldMap.isCellEmpty(neighbor))
+            if ( worldMap.isCellOnTheMap(neighbor)
+                    && worldMap.isCellEmpty(neighbor)
                     && (!reservedCells.contains(neighbor))) {
                 return neighbor;
                 }
             }
         return null;
-        }
     }
+}
 
