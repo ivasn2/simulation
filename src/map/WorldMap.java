@@ -59,4 +59,9 @@ public class WorldMap {
     public boolean isFull() {
         return entityPositions.size() == getRows() * getColumns();
     }
+
+    public void moveEntity(Coordinates destination, Entity entityToMove) {
+        removeEntity(entityToMove.getCoordinates());
+        addEntity(destination, entityToMove);
+    }
 }

@@ -29,20 +29,18 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void interact(Entity target, WorldMap worldMap, List<Coordinates> path) {
-        Creature target1 = (Creature) worldMap.getEntity(target.getCoordinates());
-        target1.takeDamage(getAttackPower());
+    public void interact(Entity targetEntity, WorldMap worldMap, List<Coordinates> path) {
+        Creature prey = (Creature) worldMap.getEntity(targetEntity.getCoordinates());
+        prey.takeDamage(getAttackPower());
 
-        if (target1.isDead()) {
-            worldMap.removeEntity(target.getCoordinates());
-            worldMap.removeEntity(getCoordinates());
-            worldMap.addEntity(target.getCoordinates(), this);
+        if (prey.isDead()) {
+            worldMap.removeEntity(targetEntity.getCoordinates());
+            worldMap.moveEntity(targetEntity.getCoordinates(), this);
             setHealth(getMaxHealth());
 
         } else if (path.size() > 1) {
-            Coordinates penultimateCell = path.get(path.size() - 2);
-            worldMap.removeEntity(getCoordinates());
-            worldMap.addEntity(penultimateCell, this);
+            Coordinates cellBeforePrey = path.get(path.size() - 2);
+            worldMap.moveEntity(cellBeforePrey, this);
         }
     }
 }
