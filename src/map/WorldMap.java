@@ -64,4 +64,8 @@ public class WorldMap {
         removeEntity(entityToMove.getCoordinates());
         addEntity(destination, entityToMove);
     }
+
+    public boolean isCellContainsRelative(Coordinates neighborCell, Class<? extends Entity> targetClassEntity) {
+        return ((!isCellEmpty(neighborCell)) && (getEntity(neighborCell).getClass() == targetClassEntity));
+    }
 }
