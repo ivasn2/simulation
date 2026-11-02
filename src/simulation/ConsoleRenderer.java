@@ -5,7 +5,9 @@
 
     public class ConsoleRenderer {
 
-        public void render(WorldMap worldMap) {
+        public void render(WorldMap worldMap, int turnCount) {
+
+            System.out.println("=== Ход №" + turnCount + " ===");
             for (int i = 0; i < worldMap.getRows(); i++) {
                 for (int j = 0; j < worldMap.getColumns(); j++) {
                     Coordinates coordinates = new Coordinates(i, j);
