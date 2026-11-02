@@ -55,14 +55,9 @@ public class ReproduceAction implements Action {
     }
 
     private Creature findNeighborPartner(Creature parent, WorldMap worldMap) {
+
         Coordinates parentCoordinates = parent.getCoordinates();
-
-        List<Coordinates> neighbors = new ArrayList<>();
-        neighbors.add(new Coordinates(parentCoordinates.getX() + 1, parentCoordinates.getY())); // Вниз
-        neighbors.add(new Coordinates(parentCoordinates.getX() - 1, parentCoordinates.getY())); // Вверх
-        neighbors.add(new Coordinates(parentCoordinates.getX(), parentCoordinates.getY() + 1)); // Вправо
-        neighbors.add(new Coordinates(parentCoordinates.getX(), parentCoordinates.getY() - 1)); // Влево
-
+        List<Coordinates> neighbors = parentCoordinates.neighborCells();
 
         for (Coordinates candidate : neighbors) {
             if (worldMap.isCellOnTheMap(candidate)
@@ -74,14 +69,9 @@ public class ReproduceAction implements Action {
         return null;
     }
 
-    private static Coordinates findEmptyNeighborCell(Coordinates parent1, WorldMap worldMap, Set<Coordinates> reservedCells) {
+    private static Coordinates findEmptyNeighborCell(Coordinates centerCell, WorldMap worldMap, Set<Coordinates> reservedCells) {
 
-        List<Coordinates> neighbors = new ArrayList<>();
-        neighbors.add(new Coordinates(parent1.getX() + 1, parent1.getY())); // Вниз
-        neighbors.add(new Coordinates(parent1.getX() - 1, parent1.getY())); // Вверх
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() + 1)); // Вправо
-        neighbors.add(new Coordinates(parent1.getX(), parent1.getY() - 1)); // Влево
-
+        List<Coordinates> neighbors = centerCell.neighborCells();
 
         for (Coordinates neighbor : neighbors) {
             if ( worldMap.isCellOnTheMap(neighbor)

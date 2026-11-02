@@ -17,35 +17,28 @@ public class BreadthFirstSearch {
         cellsToExplore.add(start);
 
         while (!cellsToExplore.isEmpty()) {
-            List<Coordinates> cells = new ArrayList<>();
-            Coordinates currentCell = cellsToExplore.poll();
 
-            Coordinates cellDown = new Coordinates(currentCell.getX() + 1, currentCell.getY());
-            cells.add(cellDown);
-            Coordinates cellUp = new Coordinates(currentCell.getX() - 1, currentCell.getY());
-            cells.add(cellUp);
-            Coordinates cellRight = new Coordinates(currentCell.getX(), currentCell.getY() + 1);
-            cells.add(cellRight);
-            Coordinates cellLeft = new Coordinates(currentCell.getX(), currentCell.getY() - 1);
-            cells.add(cellLeft);
+            Coordinates currentCell = cellsToExplore.poll();
+            List<Coordinates> cells = currentCell.neighborCells();
 
             for (Coordinates neighbor : cells) {
-                    if (    (worldMap.isCellOnTheMap(neighbor))
 
+                    if ((worldMap.isCellOnTheMap(neighbor))
                             && (!visitedCoordinates.contains(neighbor))
-
                             && ((worldMap.isCellEmpty(neighbor))
-                            || (worldMap.getEntity(neighbor).getClass() == targetClass))) {
+                            || (worldMap.isCellContainsRelative(neighbor, targetClass)))) {
 
                                 cellsToExplore.add(neighbor);
                                 visitedCoordinates.add(neighbor);
                                 cameFrom.put(neighbor, currentCell);
 
-                                if ((!worldMap.isCellEmpty(neighbor)) && (worldMap.getEntity(neighbor).getClass() == targetClass)) {
-                                    // TODO: вынести проверку цели в метод
+                                if (worldMap.isCellContainsRelative(neighbor, targetClass)) {
+
                                     Coordinates current = neighbor;
                                     List<Coordinates> coordinatesList = new ArrayList<>();
+
                                     coordinatesList.add(neighbor);
+
                                     while (true) {
                                         Coordinates cameFromCell = cameFrom.get(current);
                                         if (cameFromCell.equals(start)) {

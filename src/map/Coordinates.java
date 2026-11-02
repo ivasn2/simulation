@@ -1,5 +1,7 @@
 package map;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinates {
@@ -33,5 +35,13 @@ public class Coordinates {
         return false;
     }
 
+    public List<Coordinates> neighborCells() {
+        List<Coordinates> neighbors = new ArrayList<>();
+        neighbors.add(new Coordinates(getX() + 1, getY())); // Вниз
+        neighbors.add(new Coordinates(getX() - 1, getY())); // Вверх
+        neighbors.add(new Coordinates(getX(), getY() + 1)); // Вправо
+        neighbors.add(new Coordinates(getX(), getY() - 1)); // Влево
+        return neighbors;
+    }
 
 }
