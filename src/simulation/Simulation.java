@@ -61,4 +61,11 @@ public class Simulation {
             turnTask = executor.scheduleWithFixedDelay(this::nextTurn, 0, TURN_DELAY_MS, TimeUnit.MILLISECONDS);
         }
     }
+
+    public void quitSimulation() {
+        if (turnTask != null) {
+            turnTask.cancel(false);
+        }
+        executor.shutdownNow();
+    }
 }

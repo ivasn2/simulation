@@ -38,7 +38,7 @@ public class Main {
             } else if (command.equals(RESUME)) {
                 simulation.resumeSimulation();
             } else if (command.equals(QUIT)) {
-                simulation.pauseSimulation();
+                simulation.quitSimulation();
                 break;
             }
         }
