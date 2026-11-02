@@ -16,7 +16,7 @@ public class Predator extends Creature {
     }
 
     public Predator() {
-        this("🐻", 150, 2, 50, 10);
+        this("\uD83D\uDC3A", 150, 2, 50, 10);
     }
 
     public int getAttackPower() {
