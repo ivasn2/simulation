@@ -34,9 +34,7 @@ public class Predator extends Creature {
         prey.takeDamage(getAttackPower());
 
         if (prey.isDead()) {
-            worldMap.removeEntity(targetEntity.getCoordinates());
-            worldMap.moveEntity(targetEntity.getCoordinates(), this);
-            setHealth(getMaxHealth());
+            eat(targetEntity, worldMap);
 
         } else if (path.size() > 1) {
             Coordinates cellBeforePrey = path.get(path.size() - 2);

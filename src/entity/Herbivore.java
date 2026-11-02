@@ -23,8 +23,6 @@ public class Herbivore extends Creature {
 
     @Override
     public void interact(Entity targetEntity, WorldMap worldMap, List<Coordinates> path) {
-        worldMap.removeEntity(targetEntity.getCoordinates());
-        worldMap.moveEntity(targetEntity.getCoordinates(), this);
-        setHealth(getMaxHealth());
+        eat(targetEntity, worldMap);
     }
 }

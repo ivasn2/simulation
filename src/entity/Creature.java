@@ -78,4 +78,10 @@ public abstract class Creature extends Entity {
             }
         }
     }
+
+    protected void eat(Entity targetEntity, WorldMap worldMap) {
+        worldMap.removeEntity(targetEntity.getCoordinates());
+        worldMap.moveEntity(targetEntity.getCoordinates(), this);
+        setHealth(getMaxHealth());
+    }
 }
