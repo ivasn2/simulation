@@ -59,23 +59,23 @@ public abstract class Creature extends Entity {
 
     public void makeMove(WorldMap worldMap) {
 
-    takeDamage(getStarvationDamage());
+        takeDamage(getStarvationDamage());
 
-    if (isDead()) {
-        worldMap.removeEntity(getCoordinates());
-        return;
-    }
+        if (isDead()) {
+            worldMap.removeEntity(getCoordinates());
+            return;
+        }
 
-    List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
+        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
 
-    if (!path.isEmpty()) {
-        int stepsToTake = Math.min(path.size(), getSpeed());
-        Coordinates targetCell = path.get(stepsToTake - 1);
-        if (targetCell.equals(path.getLast())) {
-            interact(worldMap.getEntity(targetCell), worldMap, path);
-        } else {
-            worldMap.moveEntity(targetCell, this);
+        if (!path.isEmpty()) {
+            int stepsToTake = Math.min(path.size(), getSpeed());
+            Coordinates targetCell = path.get(stepsToTake - 1);
+            if (targetCell.equals(path.getLast())) {
+                interact(worldMap.getEntity(targetCell), worldMap, path);
+            } else {
+                worldMap.moveEntity(targetCell, this);
+            }
         }
     }
-  }
 }

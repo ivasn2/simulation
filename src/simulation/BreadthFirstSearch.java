@@ -23,35 +23,34 @@ public class BreadthFirstSearch {
 
             for (Coordinates neighbor : cells) {
 
-                    if ((worldMap.isCellOnTheMap(neighbor))
-                            && (!visitedCoordinates.contains(neighbor))
-                            && ((worldMap.isCellEmpty(neighbor))
-                            || (worldMap.isCellContainsRelative(neighbor, targetClass)))) {
+                if ((worldMap.isCellOnTheMap(neighbor))
+                        && (!visitedCoordinates.contains(neighbor))
+                        && ((worldMap.isCellEmpty(neighbor))
+                        || (worldMap.isCellContainsRelative(neighbor, targetClass)))) {
 
-                                cellsToExplore.add(neighbor);
-                                visitedCoordinates.add(neighbor);
-                                cameFrom.put(neighbor, currentCell);
+                    cellsToExplore.add(neighbor);
+                    visitedCoordinates.add(neighbor);
+                    cameFrom.put(neighbor, currentCell);
 
-                                if (worldMap.isCellContainsRelative(neighbor, targetClass)) {
+                    if (worldMap.isCellContainsRelative(neighbor, targetClass)) {
 
-                                    Coordinates current = neighbor;
-                                    List<Coordinates> coordinatesList = new ArrayList<>();
+                        Coordinates current = neighbor;
+                        List<Coordinates> coordinatesList = new ArrayList<>();
 
-                                    coordinatesList.add(neighbor);
+                        coordinatesList.add(neighbor);
 
-                                    while (true) {
-                                        Coordinates cameFromCell = cameFrom.get(current);
-                                        if (cameFromCell.equals(start)) {
-                                            break;
-                                        }
-                                        else {
-                                            current = cameFromCell;
-                                            coordinatesList.addFirst(current);
-                                        }
-                                    }
-                                    return coordinatesList;
-                                }
+                        while (true) {
+                            Coordinates cameFromCell = cameFrom.get(current);
+                            if (cameFromCell.equals(start)) {
+                                break;
+                            } else {
+                                current = cameFromCell;
+                                coordinatesList.addFirst(current);
+                            }
+                        }
+                        return coordinatesList;
                     }
+                }
             }
         }
         return Collections.emptyList();

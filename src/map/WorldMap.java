@@ -43,7 +43,7 @@ public class WorldMap {
     }
 
     public boolean isCellEmpty(Coordinates coordinates) {
-            return !entityPositions.containsKey(coordinates);
+        return !entityPositions.containsKey(coordinates);
     }
 
     public boolean isCellOnTheMap(Coordinates cell) {

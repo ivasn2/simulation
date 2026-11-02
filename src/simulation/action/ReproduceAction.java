@@ -74,12 +74,12 @@ public class ReproduceAction implements Action {
         List<Coordinates> neighbors = centerCell.neighborCells();
 
         for (Coordinates neighbor : neighbors) {
-            if ( worldMap.isCellOnTheMap(neighbor)
+            if (worldMap.isCellOnTheMap(neighbor)
                     && worldMap.isCellEmpty(neighbor)
                     && (!reservedCells.contains(neighbor))) {
                 return neighbor;
-                }
             }
+        }
         return null;
     }
 }
