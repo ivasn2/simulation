@@ -7,6 +7,7 @@ public class ConsoleRenderer {
 
     public void render(WorldMap worldMap, int turnCount) {
 
+        System.out.print("\u001B[H");
         System.out.println("=== Ход №" + turnCount + " ===");
         for (int i = 0; i < worldMap.getRows(); i++) {
             for (int j = 0; j < worldMap.getColumns(); j++) {
@@ -21,6 +22,7 @@ public class ConsoleRenderer {
             System.out.println();
         }
         System.out.println();
+        System.out.println("Commands: p - pause, s - resume, q - quit");
     }
 
 }

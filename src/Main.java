@@ -26,11 +26,11 @@ public class Main {
         simulation.addActionToTurnActions(new ReproduceAction(Herbivore.class));
         simulation.addActionToTurnActions(new ReproduceAction(Predator.class));
 
+        System.out.print("\u001B[2J");
         simulation.startSimulation();
 
         Scanner scanner = new Scanner(System.in);
         String command;
-        System.out.println("Commands: p - pause, s - resume, q - quit");
         while (scanner.hasNextLine()) {
             command = scanner.nextLine().trim();
             if (command.equals(PAUSE)) {
