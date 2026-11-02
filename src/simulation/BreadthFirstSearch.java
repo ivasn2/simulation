@@ -19,9 +19,9 @@ public class BreadthFirstSearch {
         while (!cellsToExplore.isEmpty()) {
 
             Coordinates currentCell = cellsToExplore.poll();
-            List<Coordinates> cells = currentCell.neighborCells();
+            List<Coordinates> neighborCells = currentCell.neighborCells();
 
-            for (Coordinates neighbor : cells) {
+            for (Coordinates neighbor : neighborCells) {
 
                 if ((worldMap.isCellOnTheMap(neighbor))
                         && (!visitedCoordinates.contains(neighbor))
@@ -40,11 +40,11 @@ public class BreadthFirstSearch {
                         coordinatesList.add(neighbor);
 
                         while (true) {
-                            Coordinates cameFromCell = cameFrom.get(current);
-                            if (cameFromCell.equals(start)) {
+                            Coordinates previousCell = cameFrom.get(current);
+                            if (previousCell.equals(start)) {
                                 break;
                             } else {
-                                current = cameFromCell;
+                                current = previousCell;
                                 coordinatesList.addFirst(current);
                             }
                         }
