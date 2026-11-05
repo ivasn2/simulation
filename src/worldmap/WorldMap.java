@@ -6,10 +6,11 @@ import entity.Entity;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WorldMap {
 
-    private final HashMap<Coordinates, Entity> entityPositions;
+    private final Map<Coordinates, Entity> entityPositions;
     private final int height;
     private final int width;
 
