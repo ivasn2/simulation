@@ -2,8 +2,8 @@ package simulation.action;
 
 import entity.Creature;
 import entity.Entity;
-import map.Coordinates;
-import map.WorldMap;
+import worldmap.Coordinates;
+import worldmap.WorldMap;
 
 import java.util.*;
 
@@ -60,7 +60,7 @@ public class ReproduceAction implements Action {
         List<Coordinates> neighbors = parentCoordinates.neighborCells();
 
         for (Coordinates candidate : neighbors) {
-            if (worldMap.isCellOnTheMap(candidate)
+            if (worldMap.isWithin(candidate)
                     && (!worldMap.isCellEmpty(candidate))
                     && (worldMap.getEntity(candidate).getClass() == creatureClass)) {
                 return (Creature) worldMap.getEntity(candidate);
@@ -74,7 +74,7 @@ public class ReproduceAction implements Action {
         List<Coordinates> neighbors = centerCell.neighborCells();
 
         for (Coordinates neighbor : neighbors) {
-            if (worldMap.isCellOnTheMap(neighbor)
+            if (worldMap.isWithin(neighbor)
                     && worldMap.isCellEmpty(neighbor)
                     && (!reservedCells.contains(neighbor))) {
                 return neighbor;

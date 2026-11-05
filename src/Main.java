@@ -15,11 +15,11 @@ public class Main {
 
         Simulation simulation = new Simulation(15, 30);
 
-        simulation.addActionToInitActions(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));
-        simulation.addActionToInitActions(new SpawnEntitiesAction(Rock.class, Rock::new, 5, 10));
-        simulation.addActionToInitActions(new SpawnEntitiesAction(Tree.class, Tree::new, 5, 10));
-        simulation.addActionToInitActions(new SpawnEntitiesAction(Herbivore.class, Herbivore::new, 20, 30));
-        simulation.addActionToInitActions(new SpawnEntitiesAction(Predator.class, Predator::new, 1, 3));
+        simulation.addInitAction(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));
+        simulation.addInitAction(new SpawnEntitiesAction(Rock.class, Rock::new, 5, 10));
+        simulation.addInitAction(new SpawnEntitiesAction(Tree.class, Tree::new, 5, 10));
+        simulation.addInitAction(new SpawnEntitiesAction(Herbivore.class, Herbivore::new, 20, 30));
+        simulation.addInitAction(new SpawnEntitiesAction(Predator.class, Predator::new, 1, 3));
 
         simulation.addActionToTurnActions(new MoveAllCreaturesAction());
         simulation.addActionToTurnActions(new SpawnEntitiesAction(Grass.class, Grass::new, 10, 20));

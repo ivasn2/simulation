@@ -1,7 +1,7 @@
 package simulation.action;
 
 import entity.*;
-import map.WorldMap;
+import worldmap.WorldMap;
 
 import java.util.ArrayList;
 import java.util.List;

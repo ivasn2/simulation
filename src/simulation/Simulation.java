@@ -1,6 +1,6 @@
 package simulation;
 
-import map.WorldMap;
+import worldmap.WorldMap;
 import simulation.action.Action;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class Simulation {
         consoleRenderer.render(worldMap, turnCount);
     }
 
-    public void addActionToInitActions(Action action) {
+    public void addInitAction(Action action) {
         initActions.add(action);
     }
 

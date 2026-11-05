@@ -1,8 +1,8 @@
 package simulation;
 
 import entity.Entity;
-import map.Coordinates;
-import map.WorldMap;
+import worldmap.Coordinates;
+import worldmap.WorldMap;
 
 import java.util.*;
 
@@ -23,7 +23,7 @@ public class BreadthFirstSearch {
 
             for (Coordinates neighbor : neighborCells) {
 
-                if ((worldMap.isCellOnTheMap(neighbor))
+                if ((worldMap.isWithin(neighbor))
                         && (!visitedCoordinates.contains(neighbor))
                         && ((worldMap.isCellEmpty(neighbor))
                         || (worldMap.isCellContainsRelative(neighbor, targetClass)))) {

@@ -1,6 +1,6 @@
 package entity;
 
-import map.Coordinates;
+import worldmap.Coordinates;
 
 public abstract class Entity {
 

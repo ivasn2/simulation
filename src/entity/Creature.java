@@ -1,7 +1,7 @@
 package entity;
 
-import map.Coordinates;
-import map.WorldMap;
+import worldmap.Coordinates;
+import worldmap.WorldMap;
 import simulation.BreadthFirstSearch;
 
 import java.util.List;
@@ -69,8 +69,8 @@ public abstract class Creature extends Entity {
         List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
 
         if (!path.isEmpty()) {
-            int stepsToTake = Math.min(path.size(), getSpeed());
-            Coordinates targetCell = path.get(stepsToTake - 1);
+            int stepCount = Math.min(path.size(), getSpeed());
+            Coordinates targetCell = path.get(stepCount - 1);
             if (targetCell.equals(path.getLast())) {
                 interact(worldMap.getEntity(targetCell), worldMap, path);
             } else {

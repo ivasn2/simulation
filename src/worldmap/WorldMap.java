@@ -1,4 +1,4 @@
-package map;
+package worldmap;
 
 import entity.Entity;
 
@@ -10,21 +10,21 @@ import java.util.List;
 public class WorldMap {
 
     private final HashMap<Coordinates, Entity> entityPositions;
-    private final int rows;
-    private final int columns;
+    private final int height;
+    private final int width;
 
-    public int getRows() {
-        return rows;
+    public int getHeight() {
+        return height;
     }
 
-    public int getColumns() {
-        return columns;
+    public int getWidth() {
+        return width;
     }
 
-    public WorldMap(int rows, int columns) {
+    public WorldMap(int height, int width) {
         this.entityPositions = new HashMap<>();
-        this.rows = rows;
-        this.columns = columns;
+        this.height = height;
+        this.width = width;
     }
 
     public void addEntity(Coordinates coordinates, Entity entity) {
@@ -46,10 +46,10 @@ public class WorldMap {
         return !entityPositions.containsKey(coordinates);
     }
 
-    public boolean isCellOnTheMap(Coordinates cell) {
-        return (cell.getX() >= 0)
-                && (cell.getX() <= getRows() - 1)
-                && (cell.getY() >= 0 && cell.getY() <= getColumns() - 1);
+    public boolean isWithin(Coordinates coordinates) {
+        return (coordinates.getX() >= 0)
+                && (coordinates.getX() <= getHeight() - 1)
+                && (coordinates.getY() >= 0 && coordinates.getY() <= getWidth() - 1);
     }
 
     public Collection<Entity> getAllEntities() {
@@ -57,7 +57,7 @@ public class WorldMap {
     }
 
     public boolean isFull() {
-        return entityPositions.size() == getRows() * getColumns();
+        return entityPositions.size() == getHeight() * getWidth();
     }
 
     public void moveEntity(Coordinates destination, Entity entityToMove) {

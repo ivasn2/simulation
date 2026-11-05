@@ -1,8 +1,8 @@
 package simulation.action;
 
 import entity.Entity;
-import map.Coordinates;
-import map.WorldMap;
+import worldmap.Coordinates;
+import worldmap.WorldMap;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -13,7 +13,7 @@ public class SpawnEntitiesAction implements Action {
     private final Supplier<? extends Entity> entityFactory;
     private final int refillBelow;
     private final int refillTo;
-    private final Random rnd = new Random();
+    private final Random random = new Random();
 
 
     public SpawnEntitiesAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int refillBelow, int refillTo) {
@@ -46,9 +46,9 @@ public class SpawnEntitiesAction implements Action {
 
 
     public Coordinates findEmptyCell(WorldMap worldMap) {
-        Coordinates coordinates = new Coordinates(rnd.nextInt(worldMap.getRows()), rnd.nextInt(worldMap.getColumns()));
+        Coordinates coordinates = new Coordinates(random.nextInt(worldMap.getHeight()), random.nextInt(worldMap.getWidth()));
         while (!worldMap.isCellEmpty(coordinates)) {
-            coordinates = new Coordinates(rnd.nextInt(worldMap.getRows()), rnd.nextInt(worldMap.getColumns()));
+            coordinates = new Coordinates(random.nextInt(worldMap.getHeight()), random.nextInt(worldMap.getWidth()));
         }
         return coordinates;
     }

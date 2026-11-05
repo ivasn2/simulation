@@ -1,7 +1,7 @@
 package entity;
 
-import map.Coordinates;
-import map.WorldMap;
+import worldmap.Coordinates;
+import worldmap.WorldMap;
 
 import java.util.List;
 
