@@ -48,9 +48,9 @@ public class WorldMap {
     }
 
     public boolean isWithin(Coordinates coordinates) {
-        return (coordinates.getX() >= 0)
-                && (coordinates.getX() <= getHeight() - 1)
-                && (coordinates.getY() >= 0 && coordinates.getY() <= getWidth() - 1);
+        return (coordinates.x() >= 0)
+                && (coordinates.x() <= getHeight() - 1)
+                && (coordinates.y() >= 0 && coordinates.y() <= getWidth() - 1);
     }
 
     public Collection<Entity> getAllEntities() {
