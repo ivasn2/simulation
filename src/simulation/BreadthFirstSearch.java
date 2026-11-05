@@ -19,7 +19,7 @@ public class BreadthFirstSearch {
         while (!cellsToExplore.isEmpty()) {
 
             Coordinates currentCell = cellsToExplore.poll();
-            List<Coordinates> neighborCells = currentCell.neighborCells();
+            List<Coordinates> neighborCells = NeighborsFinder.neighborCells(currentCell);
 
             for (Coordinates neighbor : neighborCells) {
 

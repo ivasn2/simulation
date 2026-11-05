@@ -2,6 +2,7 @@ package simulation.action;
 
 import entity.Creature;
 import entity.Entity;
+import simulation.NeighborsFinder;
 import worldmap.Coordinates;
 import worldmap.WorldMap;
 
@@ -57,7 +58,7 @@ public class ReproduceAction implements Action {
     private Creature findNeighborPartner(Creature parent, WorldMap worldMap) {
 
         Coordinates parentCoordinates = parent.getCoordinates();
-        List<Coordinates> neighbors = parentCoordinates.neighborCells();
+        List<Coordinates> neighbors = NeighborsFinder.neighborCells(parentCoordinates);
 
         for (Coordinates candidate : neighbors) {
             if (worldMap.isWithin(candidate)
@@ -71,7 +72,7 @@ public class ReproduceAction implements Action {
 
     private static Coordinates findEmptyNeighborCell(Coordinates centerCell, WorldMap worldMap, Set<Coordinates> reservedCells) {
 
-        List<Coordinates> neighbors = centerCell.neighborCells();
+        List<Coordinates> neighbors = NeighborsFinder.neighborCells(centerCell);
 
         for (Coordinates neighbor : neighbors) {
             if (worldMap.isWithin(neighbor)
