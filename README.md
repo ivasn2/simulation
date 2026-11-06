@@ -74,3 +74,9 @@ src/
 - `Action` — интерфейс действия над картой. `Simulation` исполняет `initActions` один раз перед стартом и `turnActions` каждый ход.
 - Поведение существ задаётся целью (`getTargetClass`) и реакцией на неё (`interact`), общая логика хода и еды лежит в `Creature`.
 - Поиск пути вынесен в отдельный класс и общий для обоих видов существ.
+- Поиск пути вынесен в отдельный класс и общий для обоих видов существ.
+
+## 🙏 Благодарности
+
+Спасибо за ревью проекта:
+* [raketareview](https://github.com/raketareview) — GitHub, Telegram: [@Raketa4000az](https://t.me/Raketa4000az) ([текст ревью](https://github.com/raketareview/simulation_review/blob/master/content/rev-sim177-ivan-ivasn2.md))
