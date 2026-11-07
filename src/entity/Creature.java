@@ -74,14 +74,19 @@ public abstract class Creature extends Entity {
             if (targetCell.equals(path.getLast())) {
                 interact(worldMap.getEntity(targetCell), worldMap, path);
             } else {
-                worldMap.moveEntity(targetCell, this);
+                moveEntity(targetCell, worldMap);
             }
         }
     }
 
     protected void eat(Entity targetEntity, WorldMap worldMap) {
         worldMap.removeEntity(targetEntity.getCoordinates());
-        worldMap.moveEntity(targetEntity.getCoordinates(), this);
+        moveEntity(targetEntity.getCoordinates(), worldMap);
         setHealth(getMaxHealth());
+    }
+
+    protected void moveEntity(Coordinates destination,  WorldMap worldMap) {
+        worldMap.removeEntity(getCoordinates());
+        worldMap.addEntity(destination, this);
     }
 }

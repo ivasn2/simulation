@@ -66,11 +66,6 @@ public class WorldMap {
         return entityPositions.size() == getHeight() * getWidth();
     }
 
-    public void moveEntity(Coordinates destination, Entity entityToMove) {
-        removeEntity(entityToMove.getCoordinates());
-        addEntity(destination, entityToMove);
-    }
-
     private void validate(Coordinates coordinates) {
         if (!isWithin(coordinates)) {
             throw new IllegalArgumentException(
