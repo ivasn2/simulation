@@ -71,10 +71,6 @@ public class WorldMap {
         addEntity(destination, entityToMove);
     }
 
-    public boolean isCellContainsRelative(Coordinates neighborCell, Class<? extends Entity> targetClassEntity) {
-        return ((!isCellEmpty(neighborCell)) && (getEntity(neighborCell).getClass() == targetClassEntity));
-    }
-
     private void validate(Coordinates coordinates) {
         if (!isWithin(coordinates)) {
             throw new IllegalArgumentException(

@@ -26,13 +26,13 @@ public class BreadthFirstSearch {
                 if ((worldMap.isWithin(neighbor))
                         && (!visitedCoordinates.contains(neighbor))
                         && ((worldMap.isCellEmpty(neighbor))
-                        || (worldMap.isCellContainsRelative(neighbor, targetClass)))) {
+                        || (isTargetCell(neighbor, targetClass, worldMap)))) {
 
                     cellsToExplore.add(neighbor);
                     visitedCoordinates.add(neighbor);
                     cameFrom.put(neighbor, currentCell);
 
-                    if (worldMap.isCellContainsRelative(neighbor, targetClass)) {
+                    if (isTargetCell(neighbor, targetClass, worldMap)) {
 
                         Coordinates current = neighbor;
                         List<Coordinates> coordinatesList = new ArrayList<>();
@@ -54,5 +54,9 @@ public class BreadthFirstSearch {
             }
         }
         return Collections.emptyList();
+    }
+
+    private static boolean isTargetCell(Coordinates neighborCell, Class<? extends Entity> targetClassEntity, WorldMap worldMap) {
+        return ((!worldMap.isCellEmpty(neighborCell)) && (worldMap.getEntity(neighborCell).getClass() == targetClassEntity));
     }
 }
