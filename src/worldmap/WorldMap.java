@@ -27,10 +27,12 @@ public class WorldMap {
 
     public void addEntity(Coordinates coordinates, Entity entity) {
         validate(coordinates);
-        if (isCellEmpty(coordinates)) {
-            entity.setCoordinates(coordinates);
-            entityPositions.put(coordinates, entity);
+        if (!isCellEmpty(coordinates)) {
+            throw new IllegalStateException(
+                    String.format("Координата %s уже занята", coordinates));
         }
+        entity.setCoordinates(coordinates);
+        entityPositions.put(coordinates, entity);
     }
 
     public void removeEntity(Coordinates coordinates) {
