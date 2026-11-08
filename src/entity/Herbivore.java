@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Herbivore extends Creature {
 
-    public Herbivore(String symbol, int hp, int speed, int starvationDamage) {
-        super(symbol, hp, speed, starvationDamage);
+    public Herbivore(int hp, int speed, int starvationDamage) {
+        super(hp, speed, starvationDamage);
     }
 
     public Herbivore() {
-        this("\uD83E\uDD8C", 100, 2, 5);
+        this(100, 2, 5);
     }
 
 

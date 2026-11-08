@@ -14,8 +14,7 @@ public abstract class Creature extends Entity {
     private final int speed;
     private final int starvationDamage;
 
-    public Creature(String symbol, int hp, int speed, int starvationDamage) {
-        super(symbol);
+    public Creature(int hp, int speed, int starvationDamage) {
         this.health = hp;
         this.maxHealth = health;
         this.speed = speed;
