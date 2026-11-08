@@ -12,9 +12,12 @@ public class MoveAllCreaturesAction implements Action {
     public void perform(WorldMap worldMap) {
         List<Entity> snapshot = new ArrayList<>(worldMap.getAllEntities());
         for (Entity entity : snapshot) {
-            if (!worldMap.isCellEmpty(entity.getCoordinates())) {
-                if (entity instanceof Creature && worldMap.getEntity(entity.getCoordinates()) == entity) {
-                    ((Creature) entity).makeMove(worldMap);
+            if (entity instanceof Creature) {
+                Creature creature = (Creature) entity;
+                if (!worldMap.isCellEmpty(creature.getCoordinates())) {
+                    if (worldMap.getEntity(creature.getCoordinates()) == entity) {
+                        creature.makeMove(worldMap);
+                    }
                 }
             }
         }

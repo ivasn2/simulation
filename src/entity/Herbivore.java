@@ -22,7 +22,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    public void interact(Entity targetEntity, WorldMap worldMap, List<Coordinates> path) {
+    public void interact(Coordinates targetEntity, WorldMap worldMap, List<Coordinates> path) {
         eat(targetEntity, worldMap);
     }
 }

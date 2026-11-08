@@ -1,5 +1,6 @@
 package worldmap;
 
+import entity.Creature;
 import entity.Entity;
 
 
@@ -31,7 +32,11 @@ public class WorldMap {
             throw new IllegalStateException(
                     String.format("Координата %s уже занята", coordinates));
         }
-        entity.setCoordinates(coordinates);
+
+        if (entity instanceof Creature) {
+            Creature creature = (Creature) entity;
+            creature.setCoordinates(coordinates);
+        }
         entityPositions.put(coordinates, entity);
     }
 

@@ -29,12 +29,12 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void interact(Entity targetEntity, WorldMap worldMap, List<Coordinates> path) {
-        Creature prey = (Creature) worldMap.getEntity(targetEntity.getCoordinates());
+    public void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path) {
+        Creature prey = (Creature) worldMap.getEntity(targetCell);
         prey.takeDamage(getAttackPower());
 
         if (prey.isDead()) {
-            eat(targetEntity, worldMap);
+            eat(targetCell, worldMap);
 
         } else if (path.size() > 1) {
             Coordinates cellBeforePrey = path.get(path.size() - 2);

@@ -8,6 +8,7 @@ import java.util.List;
 
 public abstract class Creature extends Entity {
 
+    private Coordinates coordinates;
     private int health;
     private final int maxHealth;
     private final int speed;
@@ -55,7 +56,7 @@ public abstract class Creature extends Entity {
 
     public abstract Class<? extends Entity> getTargetClass();
 
-    public abstract void interact(Entity targetEntity, WorldMap worldMap, List<Coordinates> path);
+    public abstract void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path);
 
     public void makeMove(WorldMap worldMap) {
 
@@ -72,21 +73,29 @@ public abstract class Creature extends Entity {
             int stepCount = Math.min(path.size(), getSpeed());
             Coordinates targetCell = path.get(stepCount - 1);
             if (targetCell.equals(path.getLast())) {
-                interact(worldMap.getEntity(targetCell), worldMap, path);
+                interact(targetCell, worldMap, path);
             } else {
                 moveEntity(targetCell, worldMap);
             }
         }
     }
 
-    protected void eat(Entity targetEntity, WorldMap worldMap) {
-        worldMap.removeEntity(targetEntity.getCoordinates());
-        moveEntity(targetEntity.getCoordinates(), worldMap);
+    protected void eat(Coordinates targetCell, WorldMap worldMap) {
+        worldMap.removeEntity(targetCell);
+        moveEntity(targetCell, worldMap);
         setHealth(getMaxHealth());
     }
 
     protected void moveEntity(Coordinates destination,  WorldMap worldMap) {
         worldMap.removeEntity(getCoordinates());
         worldMap.addEntity(destination, this);
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 }
