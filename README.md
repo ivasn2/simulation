@@ -32,7 +32,7 @@
 
 ```
 javac -encoding UTF-8 -sourcepath src -d out src/Main.java
-java -Dstdout.encoding=UTF-8 -cp out Main
+java '-Dstdout.encoding=UTF-8' -cp out Main
 ```
 
 Запускать лучше в настоящем терминале (Windows Terminal, PowerShell, iTerm и т. п.), а не в окне Run среды разработки: карта перерисовывается на месте через ANSI-последовательности, а окно Run IntelliJ IDEA их не выполняет.
