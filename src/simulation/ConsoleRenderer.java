@@ -4,9 +4,24 @@ import entity.*;
 import worldmap.Coordinates;
 import worldmap.WorldMap;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ConsoleRenderer {
 
+    private final Map<Class<? extends Entity>, String> symbols;
+
+    public ConsoleRenderer() {
+        this.symbols = new HashMap<>();
+        symbols.put(Grass.class, "\uD83C\uDF3F");
+        symbols.put(Rock.class, "\uD83E\uDEA8");
+        symbols.put(Tree.class, "\uD83C\uDF33");
+        symbols.put(Herbivore.class, "\uD83E\uDD8C");
+        symbols.put(Predator.class, "\uD83D\uDC3A");
+    }
+
     public void render(WorldMap worldMap, int turnCount) {
+
 
         System.out.print("\u001B[H");
         System.out.printf("=== Ход №%d ===\n", turnCount);
@@ -16,21 +31,7 @@ public class ConsoleRenderer {
                 if (worldMap.isCellEmpty(coordinates)) {
                     System.out.print("\uD83D\uDFEB");
                 } else {
-                    if (worldMap.getEntity(coordinates) instanceof Grass) {
-                        System.out.print("\uD83C\uDF3F");
-                    }
-                    if (worldMap.getEntity(coordinates) instanceof Rock) {
-                        System.out.print("\uD83E\uDEA8");
-                    }
-                    if (worldMap.getEntity(coordinates) instanceof Tree) {
-                        System.out.print("\uD83C\uDF33");
-                    }
-                    if (worldMap.getEntity(coordinates) instanceof Herbivore) {
-                        System.out.print("\uD83E\uDD8C");
-                    }
-                    if (worldMap.getEntity(coordinates) instanceof Predator) {
-                        System.out.print("\uD83D\uDC3A");
-                    }
+                    System.out.print(symbols.get(worldMap.getEntity(coordinates).getClass()));
                 }
             }
             System.out.println();
