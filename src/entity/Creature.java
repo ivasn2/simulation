@@ -12,10 +12,12 @@ public abstract class Creature extends Entity {
     private int health;
     private final int maxHealth;
     private final int speed;
+    private final Class<? extends Entity> food;
     private final int starvationDamage;
 
-    public Creature(int hp, int speed, int starvationDamage) {
+    public Creature(int hp, int speed, Class<? extends Entity> food, int starvationDamage) {
         this.health = hp;
+        this.food = food;
         this.maxHealth = health;
         this.speed = speed;
         this.starvationDamage = starvationDamage;
@@ -53,7 +55,9 @@ public abstract class Creature extends Entity {
         return this.health <= 0;
     }
 
-    public abstract Class<? extends Entity> getTargetClass();
+    public Class<? extends Entity> getFood() {
+        return food;
+    }
 
     public abstract void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path);
 
@@ -66,7 +70,7 @@ public abstract class Creature extends Entity {
             return;
         }
 
-        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getTargetClass());
+        List<Coordinates> path = BreadthFirstSearch.findPath(getCoordinates(), worldMap, getFood());
 
         if (!path.isEmpty()) {
             int stepCount = Math.min(path.size(), getSpeed());

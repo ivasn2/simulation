@@ -7,18 +7,12 @@ import java.util.List;
 
 public class Herbivore extends Creature {
 
-    public Herbivore(int hp, int speed, int starvationDamage) {
-        super(hp, speed, starvationDamage);
+    public Herbivore(int hp, int speed, Class<? extends Entity> food, int starvationDamage) {
+        super(hp, speed, food, starvationDamage);
     }
 
     public Herbivore() {
-        this(100, 2, 5);
-    }
-
-
-    @Override
-    public Class<? extends Entity> getTargetClass() {
-        return Grass.class;
+        this(100, 2, Grass.class, 5);
     }
 
     @Override

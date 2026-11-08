@@ -10,22 +10,17 @@ public class Predator extends Creature {
 
     private final int attackPower;
 
-    public Predator(int hp, int speed, int attackPower, int starvationDamage) {
-        super(hp, speed, starvationDamage);
+    public Predator(int hp, int speed, Class<? extends Entity> food, int attackPower, int starvationDamage) {
+        super(hp, speed, food, starvationDamage);
         this.attackPower = attackPower;
     }
 
     public Predator() {
-        this(150, 2, 50, 10);
+        this(150, 2, Herbivore.class, 50, 10);
     }
 
     public int getAttackPower() {
         return attackPower;
-    }
-
-    @Override
-    public Class<? extends Entity> getTargetClass() {
-        return Herbivore.class;
     }
 
     @Override
