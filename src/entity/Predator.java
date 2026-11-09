@@ -24,7 +24,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path) {
+    protected void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path) {
         Creature prey = (Creature) worldMap.getEntity(targetCell);
         prey.takeDamage(getAttackPower());
 

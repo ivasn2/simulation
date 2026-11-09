@@ -31,11 +31,11 @@ public abstract class Creature extends Entity {
         return maxHealth;
     }
 
-    public int getSpeed() {
+    private int getSpeed() {
         return speed;
     }
 
-    public int getStarvationDamage() {
+    private int getStarvationDamage() {
         return starvationDamage;
     }
 
@@ -47,7 +47,7 @@ public abstract class Creature extends Entity {
         return this.health > this.maxHealth / 2;
     }
 
-    public void takeDamage(int damage) {
+    protected void takeDamage(int damage) {
         this.health -= damage;
     }
 
@@ -55,11 +55,11 @@ public abstract class Creature extends Entity {
         return this.health <= 0;
     }
 
-    public Class<? extends Entity> getFood() {
+    private Class<? extends Entity> getFood() {
         return food;
     }
 
-    public abstract void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path);
+    protected abstract void interact(Coordinates targetCell, WorldMap worldMap, List<Coordinates> path);
 
     public void makeMove(WorldMap worldMap) {
 
