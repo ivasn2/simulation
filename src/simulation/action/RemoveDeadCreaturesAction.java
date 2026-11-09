@@ -11,8 +11,7 @@ public class RemoveDeadCreaturesAction implements  Action {
 
     @Override
     public void perform(WorldMap worldMap) {
-        List<Entity> snapshot = new ArrayList<>(worldMap.getAllEntities());
-        for (Entity entity : snapshot) {
+        for (Entity entity : worldMap.getAllEntities()) {
             if (entity instanceof Creature) {
                 Creature creature = (Creature) entity;
                 if (creature.isDead()) {

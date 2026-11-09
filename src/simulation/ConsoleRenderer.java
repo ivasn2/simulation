@@ -21,8 +21,6 @@ public class ConsoleRenderer {
     }
 
     public void render(WorldMap worldMap, int turnCount) {
-
-
         System.out.print("\u001B[H");
         System.out.printf("=== Ход №%d ===\n", turnCount);
         for (int i = 0; i < worldMap.getHeight(); i++) {
@@ -39,5 +37,4 @@ public class ConsoleRenderer {
         System.out.println();
         System.out.println("Commands: p - pause, s - resume, q - quit");
     }
-
 }
