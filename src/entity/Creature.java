@@ -63,6 +63,10 @@ public abstract class Creature extends Entity {
 
     public void makeMove(WorldMap worldMap) {
 
+        if (isDead()) {
+            throw new IllegalStateException("Creature is dead");
+        }
+
         takeDamage(getStarvationDamage());
 
         if (isDead()) {
@@ -88,7 +92,7 @@ public abstract class Creature extends Entity {
         setHealth(getMaxHealth());
     }
 
-    protected void moveEntity(Coordinates destination,  WorldMap worldMap) {
+    protected void moveEntity(Coordinates destination, WorldMap worldMap) {
         worldMap.removeEntity(getCoordinates());
         worldMap.addEntity(destination, this);
     }
