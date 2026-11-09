@@ -6,7 +6,10 @@ import worldmap.WorldMap;
 
 import java.util.*;
 
-public class BreadthFirstSearch {
+public final class BreadthFirstSearch {
+
+    private BreadthFirstSearch() {
+    }
 
     public static List<Coordinates> findPath(Coordinates start, WorldMap worldMap, Class<? extends Entity> targetClass) {
         Set<Coordinates> visitedCoordinates = new HashSet<>();
