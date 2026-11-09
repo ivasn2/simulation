@@ -23,21 +23,29 @@ public final class BreadthFirstSearch {
         while (!cellsToExplore.isEmpty()) {
             Coordinates currentCell = cellsToExplore.poll();
             List<Coordinates> neighborCells = NeighborsFinder.neighborCells(currentCell);
-
             for (Coordinates neighbor : neighborCells) {
-                if ((worldMap.isWithin(neighbor))
-                        && (!visitedCoordinates.contains(neighbor))
-                        && ((worldMap.isCellEmpty(neighbor))
-                        || (isTargetCell(neighbor, targetClass, worldMap)))) {
 
-                    cellsToExplore.add(neighbor);
-                    visitedCoordinates.add(neighbor);
-                    cameFrom.put(neighbor, currentCell);
-
-                    if (isTargetCell(neighbor, targetClass, worldMap)) {
-                        return assemblePath(cameFrom, start, neighbor);
-                    }
+                if (!(worldMap.isWithin(neighbor))) {
+                    continue;
                 }
+
+                if ((visitedCoordinates.contains(neighbor))) {
+                    continue;
+                }
+
+                boolean isTargetCell = isTargetCell(neighbor, targetClass, worldMap);
+                if (!isTargetCell && !worldMap.isCellEmpty(neighbor)) {
+                    continue;
+                }
+
+                cellsToExplore.add(neighbor);
+                visitedCoordinates.add(neighbor);
+                cameFrom.put(neighbor, currentCell);
+
+                if (isTargetCell) {
+                    return assemblePath(cameFrom, currentCell, neighbor);
+                }
+
             }
         }
         return Collections.emptyList();
@@ -55,12 +63,13 @@ public final class BreadthFirstSearch {
 
         while (true) {
             Coordinates previousCell = cameFrom.get(current);
+
             if (previousCell.equals(start)) {
                 break;
-            } else {
-                current = previousCell;
-                path.addFirst(current);
             }
+
+            current = previousCell;
+            path.addFirst(current);
         }
         return path;
     }
