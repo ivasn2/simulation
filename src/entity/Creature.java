@@ -66,7 +66,6 @@ public abstract class Creature extends Entity {
         takeDamage(getStarvationDamage());
 
         if (isDead()) {
-            worldMap.removeEntity(getCoordinates());
             return;
         }
 
