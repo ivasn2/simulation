@@ -30,7 +30,7 @@ public class WorldMap {
         validate(coordinates);
         if (!isCellEmpty(coordinates)) {
             throw new IllegalStateException(
-                    String.format("Координата %s уже занята", coordinates));
+                    String.format("Coordinate %s is already occupied", coordinates));
         }
 
         if (entity instanceof Creature) {
@@ -48,7 +48,7 @@ public class WorldMap {
     public Entity getEntity(Coordinates coordinates) {
         validate(coordinates);
         if (entityPositions.get(coordinates) == null) {
-            throw new NoSuchElementException("На данной клетке нет существа");
+            throw new NoSuchElementException("There is no creature on this square");
         }
         return entityPositions.get(coordinates);
     }
@@ -74,7 +74,7 @@ public class WorldMap {
     private void validate(Coordinates coordinates) {
         if (!isWithin(coordinates)) {
             throw new IllegalArgumentException(
-                    String.format("Координата %s вне карты %dx%d", coordinates, height, width));
+                    String.format("Coordinate %s is outside the %dx%d map", coordinates, height, width));
         }
     }
 }
