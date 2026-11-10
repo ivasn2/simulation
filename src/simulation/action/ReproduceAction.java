@@ -5,15 +5,15 @@ import entity.Entity;
 import simulation.NeighborsFinder;
 import worldmap.Coordinates;
 import worldmap.WorldMap;
-
 import java.util.*;
+import java.util.function.Supplier;
 
 public class ReproduceAction implements Action {
 
-    private final Class<? extends Creature> creatureClass;
+    private final Supplier<Creature> creatureCreator;
 
-    public ReproduceAction(Class<? extends Creature> creatureClass) {
-        this.creatureClass = creatureClass;
+    public ReproduceAction(Supplier<Creature> creatureCreator) {
+        this.creatureCreator = creatureCreator;
     }
 
     @Override
@@ -23,54 +23,60 @@ public class ReproduceAction implements Action {
 
         for (Entity entity : worldMap.getAllEntities()) {
 
-            if ((entity.getClass() == creatureClass)) {
-                Creature parent1 = (Creature) entity;
-
-                if (!parent1.canReproduce()) {
-                    continue;
-                }
-
-                Creature parent2 = findNeighborPartner(parent1, worldMap);
-                if ((parent2 != null) && (parent2.canReproduce())) {
-                    Coordinates babyPlace = findEmptyNeighborCell(parent1.getCoordinates(), worldMap, reservedCells);
-
-                    if (babyPlace != null) {
-                        try {
-                            Creature newBabyEntity = creatureClass.getDeclaredConstructor().newInstance();
-                            newBabiesMap.put(babyPlace, newBabyEntity);
-                            reservedCells.add(babyPlace);
-                            parent1.setHealth(parent1.getHealth() - parent1.getMaxHealth() / 2);
-                            parent2.setHealth(parent2.getHealth() - parent2.getMaxHealth() / 2);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-
-                    }
-                }
+            if (!(entity instanceof Creature)) {
+                continue;
             }
+
+            Creature parent1 = (Creature) entity;
+            if (!parent1.canReproduce()) {
+                continue;
+            }
+
+            Optional<Creature> parent2 = findNeighborPartner(parent1, worldMap);
+
+            if (parent2.isEmpty()) {
+                continue;
+            }
+            Creature partner = parent2.get();
+            Optional<Coordinates> babyPlace = findEmptyNeighborCell(parent1.getCoordinates(), worldMap, reservedCells);
+
+            if (babyPlace.isEmpty()) {
+                continue;
+            }
+            Coordinates babyCoordinates = babyPlace.get();
+
+            Creature newBabyEntity = creatureCreator.get();
+            newBabiesMap.put(babyCoordinates, newBabyEntity);
+            reservedCells.add(babyCoordinates);
+            parent1.setHealth(parent1.getHealth() - parent1.getMaxHealth() / 2);
+            partner.setHealth(partner.getHealth() - partner.getMaxHealth() / 2);
+
         }
+
         for (Map.Entry<Coordinates, Creature> entry : newBabiesMap.entrySet()) {
             worldMap.addEntity(entry.getKey(), entry.getValue());
         }
-
     }
 
-    private Creature findNeighborPartner(Creature parent, WorldMap worldMap) {
+    private Optional<Creature> findNeighborPartner(Creature parent, WorldMap worldMap) {
 
         Coordinates parentCoordinates = parent.getCoordinates();
         List<Coordinates> neighbors = NeighborsFinder.neighborCells(parentCoordinates);
 
         for (Coordinates candidate : neighbors) {
             if (worldMap.isWithin(candidate)
-                    && (!worldMap.isCellEmpty(candidate))
-                    && (worldMap.getEntity(candidate).getClass() == creatureClass)) {
-                return (Creature) worldMap.getEntity(candidate);
+                    && !worldMap.isCellEmpty(candidate)
+                    && worldMap.getEntity(candidate) instanceof Creature) {
+                Creature partner = (Creature) worldMap.getEntity(candidate);
+                if ((partner.getClass() == parent.getClass()) && (partner.canReproduce())) {
+                    return Optional.of(partner);
+                }
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    private static Coordinates findEmptyNeighborCell(Coordinates centerCell, WorldMap worldMap, Set<Coordinates> reservedCells) {
+    private Optional<Coordinates> findEmptyNeighborCell(Coordinates centerCell, WorldMap worldMap, Set<Coordinates> reservedCells) {
 
         List<Coordinates> neighbors = NeighborsFinder.neighborCells(centerCell);
 
@@ -78,10 +84,10 @@ public class ReproduceAction implements Action {
             if (worldMap.isWithin(neighbor)
                     && worldMap.isCellEmpty(neighbor)
                     && (!reservedCells.contains(neighbor))) {
-                return neighbor;
+                return Optional.of(neighbor);
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
 

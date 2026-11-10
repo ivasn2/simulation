@@ -25,23 +25,27 @@ public class Main {
         simulation.addActionToTurnActions(new MoveAllCreaturesAction());
         simulation.addActionToTurnActions(new RemoveDeadCreaturesAction());
         simulation.addActionToTurnActions(new SpawnEntitiesAction(Grass.class, Grass::new, 10, 20));
-        simulation.addActionToTurnActions(new ReproduceAction(Herbivore.class));
-        simulation.addActionToTurnActions(new ReproduceAction(Predator.class));
+        simulation.addActionToTurnActions(new ReproduceAction(Herbivore::new));
+        simulation.addActionToTurnActions(new ReproduceAction(Predator::new));
 
         System.out.print("\u001B[2J");
         simulation.startSimulation();
 
         Scanner scanner = new Scanner(System.in);
         String command;
+        label:
         while (scanner.hasNextLine()) {
             command = scanner.nextLine().trim();
-            if (command.equals(PAUSE)) {
-                simulation.pauseSimulation();
-            } else if (command.equals(RESUME)) {
-                simulation.resumeSimulation();
-            } else if (command.equals(QUIT)) {
-                simulation.quitSimulation();
-                break;
+            switch (command) {
+                case PAUSE:
+                    simulation.pauseSimulation();
+                    break;
+                case RESUME:
+                    simulation.resumeSimulation();
+                    break;
+                case QUIT:
+                    simulation.quitSimulation();
+                    break label;
             }
         }
     }
