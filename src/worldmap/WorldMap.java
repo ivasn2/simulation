@@ -48,7 +48,7 @@ public class WorldMap {
     public Entity getEntity(Coordinates coordinates) {
         validate(coordinates);
         if (entityPositions.get(coordinates) == null) {
-            throw new NoSuchElementException("There is no creature on this square");
+                throw new NoSuchElementException("There is no entity on this square");
         }
         return entityPositions.get(coordinates);
     }
