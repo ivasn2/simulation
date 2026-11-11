@@ -34,10 +34,11 @@ public class SpawnEntitiesAction implements Action {
         if (currentCount < refillBelow) {
             int spawnCount = refillTo - currentCount;
             Entity newEntity;
-            for (int i = 0; ((i < toSpawnCount) && (!worldMap.isFull())); i++) {
-
+            for (int i = 0; i < spawnCount; i++) {
+                if (worldMap.isFull()) {
+                    break;
+                }
                 newEntity = entityFactory.get();
-
                 Coordinates freeCell = findEmptyCell(worldMap);
                 worldMap.addEntity(freeCell, newEntity);
             }
