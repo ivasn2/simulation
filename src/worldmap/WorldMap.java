@@ -33,8 +33,7 @@ public class WorldMap {
                     String.format("Coordinate %s is already occupied", coordinates));
         }
 
-        if (entity instanceof Creature) {
-            Creature creature = (Creature) entity;
+        if (entity instanceof Creature creature) {
             creature.setCoordinates(coordinates);
         }
         entityPositions.put(coordinates, entity);
