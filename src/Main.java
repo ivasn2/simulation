@@ -1,3 +1,4 @@
+import control.UserCommand;
 import entity.*;
 import simulation.Simulation;
 import simulation.action.MoveAllCreaturesAction;
@@ -28,10 +29,21 @@ public class Main {
         simulation.startSimulation();
 
         Scanner scanner = new Scanner(System.in);
-        String command;
+
+
         label:
-        while (scanner.hasNextLine()) {
-            command = scanner.nextLine().trim();
+        while (true) {
+
+            UserCommand command;
+            String userInput = scanner.nextLine().trim();
+            
+            try {
+                command = UserCommand.getUserCommand(userInput);
+            } catch (IllegalArgumentException e) {
+                System.out.println("An error occurred! Invalid value");
+                continue;
+            }
+
             switch (command) {
                 case PAUSE:
                     simulation.pauseSimulation();
