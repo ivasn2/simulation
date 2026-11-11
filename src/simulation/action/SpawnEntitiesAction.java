@@ -32,7 +32,7 @@ public class SpawnEntitiesAction implements Action {
             }
         }
         if (currentCount < refillBelow) {
-            int toSpawnCount = refillTo - currentCount;
+            int spawnCount = refillTo - currentCount;
             Entity newEntity;
             for (int i = 0; ((i < toSpawnCount) && (!worldMap.isFull())); i++) {
 
