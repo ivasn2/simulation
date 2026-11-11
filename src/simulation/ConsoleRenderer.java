@@ -1,5 +1,6 @@
 package simulation;
 
+import control.UserCommand;
 import entity.*;
 import worldmap.Coordinates;
 import worldmap.WorldMap;
@@ -35,6 +36,6 @@ public class ConsoleRenderer {
             System.out.println();
         }
         System.out.println();
-        System.out.println("Commands: p - pause, s - resume, q - quit");
+        System.out.println(UserCommand.helpText());
     }
 }

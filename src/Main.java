@@ -10,10 +10,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        final String PAUSE = "p";
-        final String RESUME = "s";
-        final String QUIT = "q";
-
         Simulation simulation = new Simulation(15, 30);
 
         simulation.addInitAction(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));
