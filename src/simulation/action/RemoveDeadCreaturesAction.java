@@ -4,9 +4,6 @@ import entity.Creature;
 import entity.Entity;
 import worldmap.WorldMap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RemoveDeadCreaturesAction implements  Action {
 
     @Override
