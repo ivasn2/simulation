@@ -22,11 +22,17 @@ public class ConsoleRenderer {
     }
 
     public void render(WorldMap worldMap, int turnCount) {
+
         System.out.print("\u001B[H");
+
         System.out.printf("=== Ход №%d ===\n", turnCount);
-        for (int i = 0; i < worldMap.getHeight(); i++) {
-            for (int j = 0; j < worldMap.getWidth(); j++) {
-                Coordinates coordinates = new Coordinates(i, j);
+
+        for (int y = 0; y < worldMap.getHeight(); y++) {
+
+            for (int x = 0; x < worldMap.getWidth(); x++) {
+
+                Coordinates coordinates = new Coordinates(x, y);
+
                 if (worldMap.isCellEmpty(coordinates)) {
                     System.out.print("\uD83D\uDFEB");
                 } else {

@@ -48,7 +48,7 @@ public class WorldMap {
     public Entity getEntity(Coordinates coordinates) {
         validate(coordinates);
         if (entityPositions.get(coordinates) == null) {
-                throw new NoSuchElementException("There is no entity on this square");
+            throw new NoSuchElementException("There is no entity on this square");
         }
         return entityPositions.get(coordinates);
     }
@@ -59,8 +59,8 @@ public class WorldMap {
 
     public boolean isWithin(Coordinates coordinates) {
         return (coordinates.x() >= 0)
-                && (coordinates.x() <= getHeight() - 1)
-                && (coordinates.y() >= 0 && coordinates.y() <= getWidth() - 1);
+                && (coordinates.x() <= getWidth() - 1)
+                && (coordinates.y() >= 0 && coordinates.y() <= getHeight() - 1);
     }
 
     public Collection<Entity> getAllEntities() {
@@ -74,7 +74,7 @@ public class WorldMap {
     private void validate(Coordinates coordinates) {
         if (!isWithin(coordinates)) {
             throw new IllegalArgumentException(
-                    String.format("Coordinate %s is outside the %dx%d map", coordinates, height, width));
+                    String.format("Coordinate %s is outside the %dx%d map", coordinates, width, height));
         }
     }
 }
