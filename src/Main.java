@@ -5,11 +5,13 @@ import simulation.action.MoveAllCreaturesAction;
 import simulation.action.RemoveDeadCreaturesAction;
 import simulation.action.SpawnEntitiesAction;
 import simulation.action.ReproduceAction;
+import worldmap.WorldMap;
 
 public class Main {
     public static void main(String[] args) {
 
-        Simulation simulation = new Simulation(15, 30);
+        WorldMap worldMap = new WorldMap(15, 30);
+        Simulation simulation = new Simulation(worldMap);
         InputProcessor inputProcessor = new InputProcessor(simulation);
 
         simulation.addInitAction(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));

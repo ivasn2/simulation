@@ -23,8 +23,8 @@ public class Simulation {
     private final List<Action> turnActions = new ArrayList<>();
     private final ConsoleRenderer consoleRenderer = new ConsoleRenderer();
 
-    public Simulation(int length, int width) {
-        this.worldMap = new WorldMap(length, width);
+    public Simulation(WorldMap worldMap) {
+        this.worldMap = worldMap;
     }
 
     public void pauseSimulation() {
