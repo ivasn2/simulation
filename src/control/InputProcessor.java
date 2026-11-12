@@ -1,15 +1,20 @@
 package control;
 
 import simulation.Simulation;
+import worldmap.WorldMap;
 
 import java.util.Scanner;
 
 public class InputProcessor {
 
+    private static final int HEADER_LINES = 1;
+    private static final int FIRST_ROW_NUMBER = 1;
     private final Simulation simulation;
+    private final WorldMap worldMap;
 
-    public InputProcessor(Simulation simulation) {
+    public InputProcessor(Simulation simulation, WorldMap worldMap) {
         this.simulation = simulation;
+        this.worldMap = worldMap;
     }
 
     public void processInput() {
@@ -40,6 +45,7 @@ public class InputProcessor {
     }
 
     public void showMenu() {
+        System.out.printf("\u001B[%d;1H", HEADER_LINES + worldMap.getHeight() + FIRST_ROW_NUMBER);
         System.out.println(UserCommand.helpText());
     }
 

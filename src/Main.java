@@ -12,7 +12,7 @@ public class Main {
 
         WorldMap worldMap = new WorldMap(15, 30);
         Simulation simulation = new Simulation(worldMap);
-        InputProcessor inputProcessor = new InputProcessor(simulation);
+        InputProcessor inputProcessor = new InputProcessor(simulation, worldMap);
 
         simulation.addInitAction(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));
         simulation.addInitAction(new SpawnEntitiesAction(Rock.class, Rock::new, 5, 10));
@@ -28,9 +28,8 @@ public class Main {
 
         System.out.print("\u001B[2J");
         simulation.startSimulation();
-        System.out.print("\u001B[17;1H");
-        inputProcessor.showMenu();
 
+        inputProcessor.showMenu();
         inputProcessor.processInput();
     }
 }
