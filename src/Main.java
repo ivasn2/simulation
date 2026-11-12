@@ -1,4 +1,4 @@
-import control.UserCommand;
+import control.InputProcessor;
 import entity.*;
 import simulation.Simulation;
 import simulation.action.MoveAllCreaturesAction;
@@ -6,12 +6,11 @@ import simulation.action.RemoveDeadCreaturesAction;
 import simulation.action.SpawnEntitiesAction;
 import simulation.action.ReproduceAction;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
 
         Simulation simulation = new Simulation(15, 30);
+        InputProcessor inputProcessor = new InputProcessor(simulation);
 
         simulation.addInitAction(new SpawnEntitiesAction(Grass.class, Grass::new, 50, 100));
         simulation.addInitAction(new SpawnEntitiesAction(Rock.class, Rock::new, 5, 10));
@@ -27,34 +26,9 @@ public class Main {
 
         System.out.print("\u001B[2J");
         simulation.startSimulation();
+        System.out.print("\u001B[17;1H");
+        inputProcessor.showMenu();
 
-        Scanner scanner = new Scanner(System.in);
-
-
-        label:
-        while (true) {
-
-            UserCommand command;
-            String userInput = scanner.nextLine().trim();
-            
-            try {
-                command = UserCommand.getUserCommand(userInput);
-            } catch (IllegalArgumentException e) {
-                System.out.println("An error occurred! Invalid value");
-                continue;
-            }
-
-            switch (command) {
-                case PAUSE:
-                    simulation.pauseSimulation();
-                    break;
-                case RESUME:
-                    simulation.resumeSimulation();
-                    break;
-                case QUIT:
-                    simulation.quitSimulation();
-                    break label;
-            }
-        }
+        inputProcessor.processInput();
     }
 }
