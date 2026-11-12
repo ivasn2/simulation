@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class InputProcessor {
 
-    private static final int HEADER_LINES = 1;
     private static final int FIRST_ROW_NUMBER = 1;
+    private static final String INVALID_COMMAND_MESSAGE = "An error occurred! Invalid value";
     private final Simulation simulation;
     private final WorldMap worldMap;
 
@@ -27,7 +27,7 @@ public class InputProcessor {
             try {
                 command = UserCommand.getUserCommand(userInput);
             } catch (IllegalArgumentException e) {
-                System.out.println("An error occurred! Invalid value");
+                System.out.println(INVALID_COMMAND_MESSAGE);
                 continue;
             }
             switch (command) {
@@ -45,8 +45,7 @@ public class InputProcessor {
     }
 
     public void showMenu() {
-        System.out.printf("\u001B[%d;1H", HEADER_LINES + worldMap.getHeight() + FIRST_ROW_NUMBER);
+        System.out.printf(Cursor.MOVE_TO_LINE_FORMAT, Simulation.HEADER_LINES + worldMap.getHeight() + FIRST_ROW_NUMBER);
         System.out.println(UserCommand.helpText());
     }
-
 }

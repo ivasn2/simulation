@@ -1,3 +1,4 @@
+import control.Cursor;
 import control.InputProcessor;
 import entity.*;
 import simulation.Simulation;
@@ -26,7 +27,7 @@ public class Main {
         simulation.addTurnAction(new ReproduceAction(Herbivore::new));
         simulation.addTurnAction(new ReproduceAction(Predator::new));
 
-        System.out.print("\u001B[2J");
+        System.out.print(Cursor.CLEAR_SCREEN);
         simulation.startSimulation();
 
         inputProcessor.showMenu();

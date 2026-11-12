@@ -1,5 +1,6 @@
 package simulation;
 
+import control.Cursor;
 import worldmap.WorldMap;
 import simulation.action.Action;
 
@@ -13,10 +14,14 @@ import java.util.concurrent.TimeUnit;
 
 public class Simulation {
 
+    public static final int HEADER_LINES = 1;
+    private static final String TURN_HEADER_FORMAT = "=== Ход №%d ===\n";
+    private static final long TURN_DELAY_MS = 1100;
     private int turnCount = 0;
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> turnTask;
-    private static final long TURN_DELAY_MS = 1100;
+
+
 
     private final WorldMap worldMap;
     private final List<Action> initActions = new ArrayList<>();
@@ -46,7 +51,7 @@ public class Simulation {
         }
         turnCount++;
 
-        System.out.print("\u001B[H");
+        System.out.print(Cursor.MOVE_HOME);
 
         System.out.printf("=== Ход №%d ===\n", turnCount);
         
