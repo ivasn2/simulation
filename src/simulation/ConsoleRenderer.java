@@ -21,11 +21,7 @@ public class ConsoleRenderer {
         symbols.put(Predator.class, "\uD83D\uDC3A");
     }
 
-    public void render(WorldMap worldMap, int turnCount) {
-
-        System.out.print("\u001B[H");
-
-        System.out.printf("=== Ход №%d ===\n", turnCount);
+    public void render(WorldMap worldMap) {
 
         for (int y = 0; y < worldMap.getHeight(); y++) {
 

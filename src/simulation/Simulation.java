@@ -45,7 +45,12 @@ public class Simulation {
             action.perform(worldMap);
         }
         turnCount++;
-        consoleRenderer.render(worldMap, turnCount);
+
+        System.out.print("\u001B[H");
+
+        System.out.printf("=== Ход №%d ===\n", turnCount);
+        
+        consoleRenderer.render(worldMap);
     }
 
     public void addInitAction(Action action) {
