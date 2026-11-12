@@ -20,11 +20,11 @@ public class Main {
         simulation.addInitAction(new SpawnEntitiesAction(Herbivore.class, Herbivore::new, 20, 30));
         simulation.addInitAction(new SpawnEntitiesAction(Predator.class, Predator::new, 1, 3));
 
-        simulation.addActionToTurnActions(new MoveAllCreaturesAction());
-        simulation.addActionToTurnActions(new RemoveDeadCreaturesAction());
-        simulation.addActionToTurnActions(new SpawnEntitiesAction(Grass.class, Grass::new, 10, 20));
-        simulation.addActionToTurnActions(new ReproduceAction(Herbivore::new));
-        simulation.addActionToTurnActions(new ReproduceAction(Predator::new));
+        simulation.addTurnAction(new MoveAllCreaturesAction());
+        simulation.addTurnAction(new RemoveDeadCreaturesAction());
+        simulation.addTurnAction(new SpawnEntitiesAction(Grass.class, Grass::new, 10, 20));
+        simulation.addTurnAction(new ReproduceAction(Herbivore::new));
+        simulation.addTurnAction(new ReproduceAction(Predator::new));
 
         System.out.print("\u001B[2J");
         simulation.startSimulation();

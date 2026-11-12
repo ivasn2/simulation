@@ -57,7 +57,7 @@ public class Simulation {
         initActions.add(action);
     }
 
-    public void addActionToTurnActions(Action action) {
+    public void addTurnAction(Action action) {
         turnActions.add(action);
     }
 
