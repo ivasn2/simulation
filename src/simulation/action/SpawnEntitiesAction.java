@@ -47,10 +47,10 @@ public class SpawnEntitiesAction implements Action {
 
 
     public Coordinates findEmptyCell(WorldMap worldMap) {
-        Coordinates coordinates = new Coordinates(random.nextInt(worldMap.getWidth()), random.nextInt(worldMap.getHeight()));
-        while (!worldMap.isCellEmpty(coordinates)) {
+        Coordinates coordinates;
+        do {
             coordinates = new Coordinates(random.nextInt(worldMap.getWidth()), random.nextInt(worldMap.getHeight()));
-        }
+        } while (!worldMap.isCellEmpty(coordinates));
         return coordinates;
     }
 }
