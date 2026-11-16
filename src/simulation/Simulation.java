@@ -53,7 +53,7 @@ public class Simulation {
 
         System.out.print(Cursor.MOVE_HOME);
 
-        System.out.printf("=== Ход №%d ===\n", turnCount);
+        System.out.printf(TURN_HEADER_FORMAT, turnCount);
         
         consoleRenderer.render(worldMap);
     }
