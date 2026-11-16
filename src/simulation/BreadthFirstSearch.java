@@ -15,13 +15,13 @@ public final class BreadthFirstSearch {
 
         Set<Coordinates> visitedCoordinates = new HashSet<>();
         Map<Coordinates, Coordinates> cameFrom = new HashMap<>();
-        Queue<Coordinates> cellsToExplore = new LinkedList<>();
+        Queue<Coordinates> frontierCells = new LinkedList<>();
 
         visitedCoordinates.add(start);
-        cellsToExplore.add(start);
+        frontierCells.add(start);
 
-        while (!cellsToExplore.isEmpty()) {
-            Coordinates currentCell = cellsToExplore.poll();
+        while (!frontierCells.isEmpty()) {
+            Coordinates currentCell = frontierCells.poll();
             List<Coordinates> neighborCells = NeighborsFinder.neighborCells(currentCell);
             for (Coordinates neighbor : neighborCells) {
 
@@ -38,7 +38,7 @@ public final class BreadthFirstSearch {
                     continue;
                 }
 
-                cellsToExplore.add(neighbor);
+                frontierCells.add(neighbor);
                 visitedCoordinates.add(neighbor);
                 cameFrom.put(neighbor, currentCell);
 

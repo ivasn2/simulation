@@ -25,14 +25,14 @@ public class SpawnEntitiesAction implements Action {
 
     @Override
     public void perform(WorldMap worldMap) {
-        int currentCount = 0;
+        int maxCount = 0;
         for (Entity entity : worldMap.getAllEntities()) {
             if (entity.getClass() == entityClass) {
-                currentCount++;
+                maxCount++;
             }
         }
-        if (currentCount < refillBelow) {
-            int spawnCount = refillTo - currentCount;
+        if (maxCount < refillBelow) {
+            int spawnCount = refillTo - maxCount;
             Entity newEntity;
             for (int i = 0; i < spawnCount; i++) {
                 if (worldMap.isFull()) {

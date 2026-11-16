@@ -21,7 +21,7 @@ public class Herbivore extends Creature {
     }
 
     @Override
-    protected void interact(Coordinates targetEntity, WorldMap worldMap, List<Coordinates> path) {
-        eat(targetEntity, worldMap);
+    protected void interact(Coordinates targetCoordinates, WorldMap worldMap, List<Coordinates> path) {
+        eat(targetCoordinates, worldMap);
     }
 }
