@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class ConsoleRenderer {
 
+    private static final String EMPTY_CELL_SYMBOL = "\uD83D\uDFEB";
+
     private final Map<Class<? extends Entity>, String> symbols;
 
     public ConsoleRenderer() {
@@ -29,7 +31,7 @@ public class ConsoleRenderer {
                 Coordinates coordinates = new Coordinates(x, y);
 
                 if (worldMap.isCellEmpty(coordinates)) {
-                    System.out.print("\uD83D\uDFEB");
+                    System.out.print(EMPTY_CELL_SYMBOL);
                 } else {
                     System.out.print(symbols.get(worldMap.getEntity(coordinates).getClass()));
                 }
