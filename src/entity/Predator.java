@@ -24,7 +24,7 @@ public class Predator extends Creature {
         this(HP, SPEED, FOOD, ATTACK_POWER, STARVATION_DAMAGE);
     }
 
-    public int getAttackPower() {
+    private int getAttackPower() {
         return attackPower;
     }
 
