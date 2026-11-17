@@ -43,7 +43,7 @@ public final class BreadthFirstSearch {
                 cameFrom.put(neighbor, currentCell);
 
                 if (isTargetCell) {
-                    return assemblePath(cameFrom, currentCell, neighbor);
+                    return assemblePath(cameFrom, start, neighbor);
                 }
 
             }
