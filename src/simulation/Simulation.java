@@ -4,7 +4,6 @@ import control.Cursor;
 import worldmap.WorldMap;
 import simulation.action.Action;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,16 +19,15 @@ public class Simulation {
     private int turnCount = 0;
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private ScheduledFuture<?> turnTask;
-
-
-
     private final WorldMap worldMap;
-    private final List<Action> initActions = new ArrayList<>();
-    private final List<Action> turnActions = new ArrayList<>();
+    private final List<Action> initActions;
+    private final List<Action> turnActions;
     private final ConsoleRenderer consoleRenderer = new ConsoleRenderer();
 
-    public Simulation(WorldMap worldMap) {
+    Simulation(WorldMap worldMap, List<Action> initActions, List<Action> turnActions) {
         this.worldMap = worldMap;
+        this.initActions = List.copyOf(initActions);
+        this.turnActions = List.copyOf(turnActions);
     }
 
     public void pauseSimulation() {
@@ -54,16 +52,8 @@ public class Simulation {
         System.out.print(Cursor.MOVE_HOME);
 
         System.out.printf(TURN_HEADER_FORMAT, turnCount);
-        
+
         consoleRenderer.render(worldMap);
-    }
-
-    public void addInitAction(Action action) {
-        initActions.add(action);
-    }
-
-    public void addTurnAction(Action action) {
-        turnActions.add(action);
     }
 
     public void resumeSimulation() {
