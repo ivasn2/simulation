@@ -30,8 +30,8 @@ public class Main {
 
         InputProcessor inputProcessor = new InputProcessor(simulation, worldMap);
 
-        simulation.startSimulation();
         inputProcessor.showMenu();
+        simulation.startSimulation();
         inputProcessor.processInput();
     }
 }
