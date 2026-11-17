@@ -12,39 +12,36 @@ public class SpawnEntitiesAction implements Action {
     private final Class<? extends Entity> entityClass;
     private final Supplier<? extends Entity> entityFactory;
     private final int refillBelow;
-    private final int refillTo;
+    private final int targetCount;
     private final Random random = new Random();
 
-
-    public SpawnEntitiesAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int refillBelow, int refillTo) {
+    public SpawnEntitiesAction(Class<? extends Entity> entityClass, Supplier<? extends Entity> entityFactory, int refillBelow, int targetCount) {
         this.entityClass = entityClass;
         this.entityFactory = entityFactory;
         this.refillBelow = refillBelow;
-        this.refillTo = refillTo;
+        this.targetCount = targetCount;
     }
 
     @Override
     public void perform(WorldMap worldMap) {
-        int maxCount = 0;
+        int currentCount = 0;
         for (Entity entity : worldMap.getAllEntities()) {
             if (entity.getClass() == entityClass) {
-                maxCount++;
+                currentCount++;
             }
         }
-        if (maxCount < refillBelow) {
-            int spawnCount = refillTo - maxCount;
-            Entity newEntity;
+        if (currentCount < refillBelow) {
+            int spawnCount = targetCount - currentCount;
             for (int i = 0; i < spawnCount; i++) {
                 if (worldMap.isFull()) {
                     break;
                 }
-                newEntity = entityFactory.get();
+                Entity newEntity = entityFactory.get();
                 Coordinates freeCell = findEmptyCell(worldMap);
                 worldMap.addEntity(freeCell, newEntity);
             }
         }
     }
-
 
     private Coordinates findEmptyCell(WorldMap worldMap) {
         Coordinates coordinates;
