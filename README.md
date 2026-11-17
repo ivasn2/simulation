@@ -24,7 +24,7 @@
 - Размножение: два существа одного вида рядом, у обоих HP больше половины максимума. Детёныш появляется на свободной соседней клетке, а родители тратят половину максимального HP.
 - Если травы на карте становится слишком мало, она появляется снова.
 
-Размер поля и характеристики существ (HP, скорость, сила атаки, голод) настраиваются в `Main` и в конструкторах `Herbivore` и `Predator`.
+Размер поля, начальное и целевое количество сущностей настраиваются в `Main`, характеристики существ (HP, скорость, сила атаки, голод) — в конструкторах `Herbivore` и `Predator`.
 
 ## Запуск
 
@@ -45,7 +45,7 @@ java '-Dstdout.encoding=UTF-8' -cp out Main
 
 ## Управление
 
-Команды вводятся в консоль, после каждой Enter:
+Симуляция стартует сразу после запуска. Команды вводятся в консоль, после каждой Enter:
 
 | Команда | Действие |
 |---------|----------|
@@ -57,24 +57,31 @@ java '-Dstdout.encoding=UTF-8' -cp out Main
 
 ```
 src/
-├── Main.java                  точка входа, настройка симуляции
-├── entity/                    Entity, Creature, Herbivore, Predator, Grass, Rock, Tree
-├── map/                       WorldMap (карта), Coordinates (координаты)
+├── Main.java                      точка входа, сборка симуляции через Builder
+├── control/                       ввод пользователя
+│   ├── InputProcessor.java        чтение и разбор команд, вывод меню
+│   ├── UserCommand.java           список команд (пауза, продолжить, выход)
+│   └── Cursor.java                ANSI-последовательности управления курсором
+├── entity/                        Entity, Creature, Herbivore, Predator, Grass, Rock, Tree
+├── worldmap/                      WorldMap (карта), Coordinates (координаты)
 └── simulation/
-    ├── Simulation.java        карта, счётчик ходов, рендерер, списки действий
-    ├── ConsoleRenderer.java   отрисовка карты в консоли
-    ├── BreadthFirstSearch.java  поиск пути
-    └── action/                Action и его реализации:
-                               MoveAllCreaturesAction, SpawnEntitiesAction, ReproduceAction
+    ├── Simulation.java            счётчик ходов, запуск и остановка по таймеру
+    ├── SimulationBuilder.java     сбор конфигурации симуляции до старта
+    ├── ConsoleRenderer.java       отрисовка карты в консоли
+    ├── BreadthFirstSearch.java    поиск пути
+    ├── NeighborsFinder.java       соседние клетки
+    └── action/                    Action и его реализации:
+                                   MoveAllCreaturesAction, RemoveDeadCreaturesAction,
+                                   SpawnEntitiesAction, ReproduceAction
 ```
 
 ## Дизайн
 
-- `WorldMap` хранит сущности в `HashMap<Coordinates, Entity>`: пустые клетки не хранятся, наружу отдаётся только копия коллекции, доступ идёт через методы (`addEntity`, `removeEntity`, `moveEntity`, `isCellEmpty` и др.).
+- `WorldMap` хранит сущности в `Map<Coordinates, Entity>` (реализация — `HashMap`): пустые клетки не хранятся, наружу отдаётся только копия коллекции, доступ идёт через методы (`addEntity`, `removeEntity`, `getEntity`, `isCellEmpty` и др.).
 - `Action` — интерфейс действия над картой. `Simulation` исполняет `initActions` один раз перед стартом и `turnActions` каждый ход.
-- Поведение существ задаётся целью (`getTargetClass`) и реакцией на неё (`interact`), общая логика хода и еды лежит в `Creature`.
-- Поиск пути вынесен в отдельный класс и общий для обоих видов существ.
-- Поиск пути вынесен в отдельный класс и общий для обоих видов существ.
+- `SimulationBuilder` собирает карту и списки действий; после `build()` `Simulation` хранит неизменяемые копии списков, поэтому менять конфигурацию во время работы нельзя.
+- Поведение существ задаётся целью (класс еды, передаётся в конструктор `Creature`) и реакцией на неё (`interact`), общая логика хода, еды и перемещения лежит в `Creature`.
+- Поиск пути (`BreadthFirstSearch`) вынесен в отдельный класс и общий для обоих видов существ.
 
 ## 🙏 Благодарности
 
